@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITIL v4 Foundation — 100 Q-Bank</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0d1018;--bg2:#151a28;--bg3:#1b2136;--bg4:#232a42;
+  --border:#2a3150;--border2:#343d5e;
+  --t:#e6e9f2;--t2:#8a93b5;--t3:#566085;
+  --acc:#5a8af2;--acc2:#3564d1;--accBg:rgba(90,138,242,.08);
+  --green:#27d98b;--greenBg:rgba(39,217,139,.08);--greenBd:rgba(39,217,139,.35);
+  --red:#f25a5a;--redBg:rgba(242,90,90,.08);--redBd:rgba(242,90,90,.35);
+  --yellow:#f2c744;--yellowBg:rgba(242,199,68,.06);--yellowBd:rgba(242,199,68,.25);
+  --orange:#f29b4f;--purple:#a87cf2;
+  --r:10px;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;font-size:14px;line-height:1.6}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── HEADER ── */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.logo{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--acc);letter-spacing:.04em}.logo span{color:var(--t3)}
+.mode-sw{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:2px;gap:2px}
+.mode-btn{padding:5px 14px;border-radius:6px;border:none;background:0 0;color:var(--t2);font:13px var(--font);cursor:pointer;transition:.15s}
+.mode-btn.on{background:var(--acc);color:#fff;font-weight:500}
+
+/* ── STATS ── */
+.stats{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:12px}
+.st{display:flex;align-items:center;gap:5px;color:var(--t2)}.st b{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--t)}.st b.g{color:var(--green)}.st b.r{color:var(--red)}
+.sep{width:1px;height:18px;background:var(--border)}
+.prog-o{flex:1;height:4px;background:var(--bg3);border-radius:2px;min-width:60px}.prog-i{height:100%;background:var(--acc);border-radius:2px;transition:width .3s}
+.pct{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.rst{background:0 0;border:1px solid var(--border);color:var(--t2);border-radius:6px;padding:4px 10px;font:11px var(--font);cursor:pointer}.rst:hover{border-color:var(--red);color:var(--red)}
+
+/* ── FILTERS ── */
+.filters{padding:10px 20px;display:flex;gap:5px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:var(--bg2)}
+.fbtn{padding:4px 11px;border-radius:18px;border:1px solid var(--border);background:0 0;color:var(--t2);font:11px var(--font);cursor:pointer;transition:.12s}
+.fbtn:hover{border-color:var(--acc);color:var(--acc)}.fbtn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+
+/* ── MAIN ── */
+.main{padding:20px;max-width:920px;margin:0 auto}
+
+/* ── KEYWORD HIGHLIGHTS ── */
+.kw{color:var(--yellow);font-weight:600}
+.kw-term{color:var(--acc);font-weight:500}
+.kw-neg{color:var(--red);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+/* ── QUESTION CARD ── */
+.qc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden;transition:border-color .15s}
+.qc:hover{border-color:var(--border2)}
+.qc.ok{border-color:var(--greenBd)}.qc.no{border-color:var(--redBd)}
+
+.qh{padding:14px 16px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.qn{font-family:var(--mono);font-size:10px;color:var(--t3);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 6px;white-space:nowrap;margin-top:2px;flex-shrink:0}
+.qt{flex:1;font-size:13.5px;color:var(--t);line-height:1.65}
+.qs{font-size:15px;flex-shrink:0;margin-top:1px}
+
+.tag{font-size:9px;padding:2px 7px;border-radius:14px;border:1px solid;white-space:nowrap;flex-shrink:0;margin-top:2px;font-weight:500}
+.tag-concept{border-color:var(--acc);color:var(--acc)}
+.tag-dimension{border-color:var(--purple);color:var(--purple)}
+.tag-principle{border-color:var(--orange);color:var(--orange)}
+.tag-svs{border-color:var(--green);color:var(--green)}
+.tag-svc{border-color:#42c8f5;color:#42c8f5}
+.tag-practice{border-color:var(--yellow);color:var(--yellow)}
+
+.qb{border-top:1px solid var(--border);padding:14px 16px;display:none}
+.qb.open{display:block}
+
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.op{padding:10px 13px;border-radius:7px;border:1px solid var(--border);cursor:pointer;display:flex;gap:9px;align-items:flex-start;transition:.12s;font-size:13px;color:var(--t);background:var(--bg3)}
+.op:hover:not(.dis){border-color:var(--acc);background:var(--accBg)}
+.op.dis{cursor:default;opacity:.5}
+.op.cor{background:var(--greenBg);border-color:var(--green);color:#b0f5d8;opacity:1}
+.op.wrn{background:var(--redBg);border-color:var(--red);color:#f9b5b5;opacity:1}
+.op.rev{background:var(--greenBg);border-color:var(--green);color:#b0f5d8;opacity:1}
+.opk{font-family:var(--mono);font-size:11px;font-weight:500;min-width:16px;margin-top:1px;opacity:.6}
+
+/* EXPLANATION */
+.exp{border-radius:8px;padding:14px;margin-top:10px;display:none}
+.exp.show{display:block}
+.exp.cexp{background:var(--greenBg);border:1px solid var(--greenBd)}
+.exp.wexp{background:var(--redBg);border:1px solid var(--redBd)}
+.exp-r{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.exp-r.c{color:var(--green)}.exp-r.w{color:var(--red)}
+.exp-lbl{font:10px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:4px;margin-top:10px}
+.exp-en{font-size:13px;color:var(--t);line-height:1.7}
+.exp-ko{font-size:12px;color:var(--t2);line-height:1.7;padding-top:10px;border-top:1px solid var(--border);margin-top:10px}
+.exp-why{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-top:10px}
+.exp-why .why-title{font:500 11px var(--mono);color:var(--yellow);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.exp-why .why-body{font-size:12px;color:var(--t2);line-height:1.65}
+.exp-why .why-body b{color:var(--yellow);font-weight:500}
+.exp-tip{background:var(--yellowBg);border:1px solid var(--yellowBd);border-radius:6px;padding:8px 12px;font-size:12px;color:#e0c86a;margin-top:10px;line-height:1.6}
+
+/* ── STUDY MODE ── */
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.sc .s-head{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.sc .s-body{padding:14px 16px}
+.s-opts{margin:10px 0;display:flex;flex-direction:column;gap:5px}
+.s-op{padding:8px 12px;border-radius:6px;border:1px solid var(--border);font-size:12px;display:flex;gap:8px;color:var(--t2);background:var(--bg3)}
+.s-op.ans{border-color:var(--green);background:var(--greenBg);color:#b0f5d8}
+.s-exp{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:10px}
+
+.hidden{display:none!important}
+@media(max-width:600px){.hdr,.stats,.filters,.main{padding-left:12px;padding-right:12px}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">ITIL<span>v4</span> · Q-Bank <span style="font-size:10px;color:var(--t3);margin-left:6px">100 Questions</span></div>
+  <div class="mode-sw">
+    <button class="mode-btn on" onclick="setMode('quiz')">📝 Quiz</button>
+    <button class="mode-btn" onclick="setMode('study')">📖 Study</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="st">Total <b id="sT">100</b></div><div class="sep"></div>
+  <div class="st">Answered <b id="sA">0</b></div>
+  <div class="st">Correct <b class="g" id="sC">0</b></div>
+  <div class="st">Wrong <b class="r" id="sW">0</b></div>
+  <div class="sep"></div>
+  <div class="prog-o"><div class="prog-i" id="pB"></div></div>
+  <span class="pct" id="pP">0%</span>
+  <div class="sep"></div>
+  <button class="rst" onclick="resetAll()">↺ Reset</button>
+</div>
+
+<div class="filters">
+  <button class="fbtn on" onclick="filt('all',this)">All (100)</button>
+  <button class="fbtn" onclick="filt('concept',this)">Key Concepts (15)</button>
+  <button class="fbtn" onclick="filt('dimension',this)">4 Dimensions (10)</button>
+  <button class="fbtn" onclick="filt('principle',this)">Guiding Principles (15)</button>
+  <button class="fbtn" onclick="filt('svs',this)">SVS (5)</button>
+  <button class="fbtn" onclick="filt('svc',this)">Value Chain (10)</button>
+  <button class="fbtn" onclick="filt('practice',this)">Practices (45)</button>
+</div>
+
+<div class="main">
+  <div id="quizV"></div>
+  <div id="studyV" class="hidden"></div>
+</div>
+
+<script>
+// ── KEYWORD HIGHLIGHTING ──
+function hl(text) {
+  // Negative/critical keywords - red underline
+  text = text.replace(/\b(NOT|NEVER|VIOLATING|INCORRECT)\b/g, '<span class="kw-neg">$1</span>');
+  // Superlative keywords - yellow
+  text = text.replace(/\b(BEST|MOST|PRIMARY|FIRST|ALL|CORRECT|CORRECTLY|KEY|CRITICAL|MAIN|TWO)\b/g, '<span class="kw">$1</span>');
+  // ITIL terms - blue
+  const terms = [
+    'ITIL 4','ITIL v4','ITIL v3','value co-creation','value','co-creation','co-created',
+    'Service Value System','SVS','Service Value Chain','SVC',
+    'Guiding Principles','guiding principle','Four Dimensions','four dimensions',
+    'Continual Improvement','continual improvement',
+    'Utility','Warranty','fit for purpose','fit for use',
+    'Incident Management','incident','major incident',
+    'Problem Management','problem','known error','workaround','Known Error Database','KEDB',
+    'Change Enablement','change','standard change','normal change','emergency change','Change Advisory Board','CAB',
+    'Service Desk','service desk','single point of contact','SPOC',
+    'Service Level Management','SLA','Service Level Agreement','OLA','Operational Level Agreement','watermelon effect',
+    'Service Request Management','service request',
+    'IT Asset Management','ITAM','IT asset',
+    'Release Management','Deployment Management',
+    'Monitoring and Event Management','event',
+    'Service Configuration Management','Configuration Item','CI','CMDB',
+    'Knowledge Management','DIKW',
+    'Relationship Management',
+    'Organizations and People','Information and Technology','Partners and Suppliers','Value Streams and Processes',
+    'PESTLE','Governance','governance',
+    'Customer','User','Sponsor',
+    'service provider','service consumer','service relationship','service offering',
+    'outcome','output','risk',
+    'Plan','Improve','Engage','Design and Transition','Obtain\\/Build','Deliver and Support',
+    'General Management','Service Management','Technical Management',
+    'value stream','practices','practice'
+  ];
+  // Sort by length desc to match longest first
+  const sorted = terms.sort((a,b) => b.length - a.length);
+  sorted.forEach(term => {
+    // Don't re-highlight inside existing spans
+    const re = new RegExp(`(?<![\\w-])(?<!<[^>]*)(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})(?![^<]*>)(?![\\w-])`, 'g');
+    text = text.replace(re, '<span class="kw-term">$1</span>');
+  });
+  return text;
+}
+
+const Q = [
+  // ===== KEY CONCEPTS (1-15) =====
+  {id:1,cat:'concept',q:"Which of the following BEST defines 'value' in ITIL 4?",
+    o:["The financial cost required to deliver a service","The perceived benefits, usefulness, and importance of something","The technical features and capabilities of a service offering","The number of users who actively use a service"],a:1,
+    en:"In ITIL 4, value is defined as the perceived benefits, usefulness, and importance of something. Critically, value is always subjective — it is perceived by the consumer, not determined by the provider. It is co-created through active collaboration between service providers and consumers.",
+    ko:"ITIL v4에서 가치(Value)는 '인식된 혜택, 유용성, 중요성'으로 정의됩니다. 핵심은 가치가 주관적이며, 제공자가 아닌 소비자가 인식한다는 점입니다.",
+    why:"B가 정답인 이유: ITIL v4의 공식 정의와 정확히 일치합니다. A(비용)는 가치의 정의가 아니며, C(기술 기능)는 Utility의 일부일 뿐이고, D(사용자 수)는 가치 측정 지표가 아닙니다.",
+    tip:"★ 가치는 제공자가 정의하는 것이 아니라 소비자가 인식하는 것입니다."},
+
+  {id:2,cat:'concept',q:"A service is defined in ITIL 4 as a means of enabling value co-creation. Which TWO aspects together create value for customers?",
+    o:["Utility and Warranty","Cost and Risk","Output and Outcome","Process and Practice"],a:0,
+    en:"Value is created through the combination of Utility (what the service does — fit for purpose) and Warranty (how well it does it — fit for use). Both must be present for a service to deliver value.",
+    ko:"가치 = 유용성(Utility) + 보증(Warranty). Utility는 Fit for Purpose(목적에 부합), Warranty는 Fit for Use(사용에 부합)입니다. 둘 중 하나라도 없으면 완전한 가치가 생성되지 않습니다.",
+    why:"A가 정답인 이유: Utility는 '서비스가 무엇을 하는가', Warranty는 '얼마나 잘 작동하는가'를 의미하며, 이 둘의 결합이 가치를 만듭니다. B(Cost/Risk)는 가치의 구성요소가 아닌 관리 대상이고, C(Output/Outcome)는 결과물의 분류이며, D(Process/Practice)는 운영 단위입니다.",
+    tip:"★ 공식처럼 암기: Value = Utility + Warranty"},
+
+  {id:3,cat:'concept',q:"An organization's HR department defines the requirements for a new payroll service and is accountable for the outcomes. The employees use the service every month, and the Finance Director approves the budget. Which role does the HR department fulfill?",
+    o:["User","Sponsor","Customer","Service provider"],a:2,
+    en:"The Customer defines the requirements for a service and is accountable for the outcomes of service consumption. The User is the person who uses the service day-to-day. The Sponsor authorizes the budget.",
+    ko:"고객(Customer)은 서비스 요구사항을 정의하고 결과에 책임지는 역할입니다. 사용자(User)는 서비스를 실제 사용하는 사람, 스폰서(Sponsor)는 예산을 승인하는 사람입니다.",
+    why:"C가 정답인 이유: HR부서가 '요구사항을 정의하고 결과에 책임진다'는 설명이 Customer의 정의와 정확히 일치합니다. A(User)는 직원들이 실제 사용하는 역할, B(Sponsor)는 CFO가 예산을 승인하는 역할입니다.",
+    tip:"★ Customer=요구사항+책임 / User=실제사용 / Sponsor=예산승인"},
+
+  {id:4,cat:'concept',q:"Utility is described as 'fit for ______' and Warranty is described as 'fit for ______'. Which words CORRECTLY complete these definitions?",
+    o:["Utility: fit for purpose / Warranty: fit for use","Utility: fit for use / Warranty: fit for purpose","Utility: fit for delivery / Warranty: fit for design","Utility: fit for cost / Warranty: fit for performance"],a:0,
+    en:"Utility = fit for purpose (the service does what it's supposed to do). Warranty = fit for use (the service is available when needed, has sufficient capacity, and is secure).",
+    ko:"Utility = Fit for Purpose (서비스가 목적하는 기능을 수행), Warranty = Fit for Use (서비스가 필요할 때 사용 가능하고, 충분한 용량과 보안을 갖춤).",
+    why:"A가 정답인 이유: 이것은 ITIL v4의 공식 정의입니다. B는 순서가 뒤바뀌어 있고, C와 D는 ITIL에서 사용하지 않는 용어 조합입니다.",
+    tip:"★ Purpose=목적=Utility / Use=사용=Warranty — 시험 빈출 페어"},
+
+  {id:5,cat:'concept',q:"Which of the following BEST describes an 'outcome' in ITIL 4?",
+    o:["A tangible or intangible deliverable produced by an activity","A result for a stakeholder enabled by one or more outputs","The total number of processes required to deliver a service","A documented agreement between a provider and consumer"],a:1,
+    en:"An outcome is a result for a stakeholder enabled by one or more outputs. Output is something you produce (e.g., a report), while outcome is the result it enables (e.g., a business decision made from that report).",
+    ko:"산출물(Output)은 활동의 결과로 생산되는 유·무형의 결과물이고, 결과(Outcome)는 그 산출물이 이해관계자에게 가져다주는 결과입니다.",
+    why:"B가 정답인 이유: Outcome의 공식 정의입니다. A는 Output(산출물)의 정의이고, C는 프로세스 수와 무관하며, D는 SLA의 정의에 가깝습니다. Output vs Outcome 구분이 핵심입니다.",
+    tip:"★ Output(산출물: 보고서) vs Outcome(결과: 그 보고서로 내린 의사결정)"},
+
+  {id:6,cat:'concept',q:"Which of the following is the BEST example of an 'output'?",
+    o:["A customer being able to process transactions faster after a system upgrade","Increased customer satisfaction following a service improvement","A newly deployed software application","An employee's ability to work from home due to a VPN service"],a:2,
+    en:"An output is a tangible or intangible deliverable produced by an activity. The deployed application is the output. The business benefits (faster transactions, satisfaction, remote work) are outcomes.",
+    ko:"Output(산출물)은 활동의 직접적 결과물입니다. 배포된 소프트웨어 애플리케이션이 산출물이고, 나머지는 Outcome(결과)입니다.",
+    why:"C가 정답인 이유: 배포된 애플리케이션은 '활동의 직접적 결과물(산출물)'입니다. A(빠른 거래 처리), B(만족도 향상), D(재택근무 가능)는 모두 그 산출물이 가능하게 한 비즈니스 결과(Outcome)입니다.",
+    tip:"★ Output=구체적 결과물(앱, 보고서) / Outcome=비즈니스 결과(효율화, 만족도)"},
+
+  {id:7,cat:'concept',q:"ITIL 4 describes 'service management' as specialized organizational capabilities for enabling value. These capabilities take the form of what?",
+    o:["Policies and procedures that govern IT operations","Functions, roles, processes, and activities","Practices that add value for stakeholders","Technologies that automate service delivery"],a:2,
+    en:"In ITIL 4, service management capabilities take the form of practices — a set of organizational resources designed for performing work. This is a shift from ITIL v3's 'processes' to v4's broader 'practices' that include people, tools, and processes.",
+    ko:"ITIL v4에서 서비스 관리 역량은 '프랙티스(Practices)' 형태를 취합니다. v3의 '프로세스' 중심에서 벗어나, 사람·도구·프로세스를 모두 포괄합니다.",
+    why:"C가 정답인 이유: v4는 프로세스(B)가 아닌 프랙티스(Practices)라는 더 넓은 개념을 사용합니다. A(정책/절차)는 프랙티스의 일부일 뿐이고, D(기술)은 4가지 차원 중 하나입니다.",
+    tip:"★ v3: Process 중심 → v4: Practice 중심 (더 넓은 개념)"},
+
+  {id:8,cat:'concept',q:"What is 'value co-creation' in the context of ITIL 4?",
+    o:["The process by which IT teams calculate the cost of delivering services","A collaboration between the service provider and consumer to create value together","A method for measuring the financial return on IT investments","A framework for automating service delivery workflows"],a:1,
+    en:"Value co-creation is a fundamental philosophy of ITIL 4 — value is not delivered by the provider alone, but created together through active collaboration. The consumer participates through feedback, usage, and communication.",
+    ko:"가치 공동 창출(Value Co-creation)은 ITIL v4의 핵심 철학입니다. 가치는 제공자가 일방적으로 전달하는 것이 아니라, 소비자와 제공자가 함께 만들어갑니다.",
+    why:"B가 정답인 이유: Co-creation의 'Co'는 '함께'를 의미합니다. 제공자와 소비자가 협력하여 가치를 만드는 것이 핵심입니다. A(비용 계산), C(ROI 측정), D(자동화)는 모두 co-creation과 무관합니다.",
+    tip:"★ v3=가치 전달(Delivery) → v4=가치 공동창출(Co-creation)"},
+
+  {id:9,cat:'concept',q:"A service provider and a consumer enter into a cooperation to jointly create value. ITIL 4 calls this a:",
+    o:["Service level agreement","Service relationship","Value stream","Service catalog"],a:1,
+    en:"A service relationship is the cooperation between a service provider and service consumer. It includes service provision, service consumption, and service relationship management.",
+    ko:"서비스 관계(Service Relationship)는 서비스 제공자와 소비자 간의 협력 관계입니다.",
+    why:"B가 정답인 이유: 제공자와 소비자 간의 '협력 관계'를 ITIL v4에서는 Service Relationship이라고 합니다. A(SLA)는 합의 문서, C(Value Stream)는 가치 창출 단계, D(Service Catalog)는 서비스 목록입니다.",
+    tip:"★ 제공자+소비자의 협력 관계 = Service Relationship"},
+
+  {id:10,cat:'concept',q:"Which of the following BEST describes a 'service offering'?",
+    o:["A formal agreement between a service provider and a customer","A description of one or more services designed to address the needs of a target consumer group","A list of all the services an organization provides","A configuration of IT infrastructure components"],a:1,
+    en:"A service offering is a description of one or more services designed to address the needs of a target consumer group. It may include goods, access to resources, and service actions.",
+    ko:"서비스 오퍼링은 특정 소비자 그룹의 니즈를 충족하기 위해 설계된 하나 이상의 서비스 설명입니다.",
+    why:"B가 정답인 이유: Service Offering은 '특정 소비자 그룹을 위한 서비스 설명'입니다. A는 SLA, C는 Service Catalog, D는 인프라 구성입니다.",
+    tip:"★ Service Offering = 타깃 소비자를 위한 서비스 제안"},
+
+  {id:11,cat:'concept',q:"Which role authorizes the budget for the consumption of a service?",
+    o:["Customer","User","Sponsor","Service owner"],a:2,
+    en:"The Sponsor is the role that authorizes the budget for service consumption. This is separate from the Customer (defines requirements) and User (uses the service).",
+    ko:"스폰서(Sponsor)는 서비스 소비를 위한 예산을 승인하는 역할입니다.",
+    why:"C가 정답인 이유: 예산 승인은 Sponsor의 고유 책임입니다. A(Customer)는 요구사항 정의, B(User)는 실제 사용, D(Service Owner)는 서비스 전체 책임자입니다.",
+    tip:"★ Sponsor=예산승인, Customer=요구정의+책임, User=실제사용"},
+
+  {id:12,cat:'concept',q:"What does ITIL 4 mean by 'risk'?",
+    o:["The financial cost of a service failure","A possible event that could cause harm or loss, or make it more difficult to achieve objectives","The probability that a service will fail to meet its SLA","The gap between current service performance and the desired state"],a:1,
+    en:"In ITIL 4, risk is defined as a possible event that could cause harm or loss, or make it more difficult to achieve objectives. Risk can have positive (opportunity) or negative (threat) effects.",
+    ko:"리스크(Risk)는 피해나 손실을 야기하거나 목표 달성을 어렵게 만들 수 있는 가능성 있는 사건입니다.",
+    why:"B가 정답인 이유: ITIL v4의 Risk 공식 정의입니다. A는 비용만 언급하고, C는 SLA 미충족 확률로 제한적이며, D는 Gap Analysis의 개념입니다.",
+    tip:"★ Risk = 가능한 사건 (긍정적 기회 + 부정적 위협 모두 포함)"},
+
+  {id:13,cat:'concept',q:"An IT department provides infrastructure services to internal business units. What role does the IT department play?",
+    o:["External service provider only","Internal service consumer","Service provider","Sponsor"],a:2,
+    en:"The IT department acts as a service provider to internal business units. ITIL 4 recognizes that service providers can be internal or external.",
+    ko:"IT부서는 내부 비즈니스 부서에 서비스를 제공하는 서비스 제공자 역할을 합니다.",
+    why:"C가 정답인 이유: 내부든 외부든 서비스를 제공하면 Service Provider입니다. A(외부만)는 틀리고, B(소비자)는 역할이 반대이며, D(Sponsor)는 예산 승인자입니다.",
+    tip:"★ 내부 IT부서도 서비스 제공자(Service Provider)가 될 수 있습니다"},
+
+  {id:14,cat:'concept',q:"Which of the following BEST describes a 'service' in ITIL 4?",
+    o:["A set of IT components that are managed together","A means of enabling value co-creation by facilitating outcomes that customers want to achieve, without the customer having to manage specific costs and risks","A process that converts inputs into outputs","A formal agreement between provider and consumer"],a:1,
+    en:"This is the formal ITIL 4 definition of a service. Key elements: (1) enabling value co-creation, (2) facilitating outcomes customers want, (3) without customers managing specific costs and risks.",
+    ko:"서비스(Service)의 공식 정의: 고객이 원하는 결과를 달성할 수 있도록 하되, 특정 비용과 위험을 고객이 직접 관리할 필요 없이 가치 공동 창출을 가능하게 하는 수단.",
+    why:"B가 정답인 이유: ITIL v4의 서비스 공식 정의와 정확히 일치합니다. A는 CI 묶음, C는 프로세스 정의, D는 SLA 정의입니다.",
+    tip:"★ 서비스 정의 핵심 3요소: 가치공동창출 + 결과달성 + 비용/위험 관리 불필요"},
+
+  {id:15,cat:'concept',q:"Which statement about organizations in ITIL 4 is CORRECT?",
+    o:["An organization can only be a service provider, not a consumer","An organization must be a legally registered company","An organization is a person or a group of people that has its own functions with responsibilities to achieve its objectives","Organizations can only exist within the private sector"],a:2,
+    en:"An organization is a person or group of people with its own functions, responsibilities, authorities, and relationships to achieve objectives. It can be any size and can be a provider, consumer, or both.",
+    ko:"조직은 고유한 기능, 책임, 권한, 관계를 가진 개인 또는 그룹으로 목표 달성을 위해 기능합니다.",
+    why:"C가 정답인 이유: ITIL v4의 조직 공식 정의입니다. A(제공자만)는 틀리고, B(법적 등록 필수)는 요구사항이 아니며, D(민간 부문만)도 틀립니다.",
+    tip:"★ 조직 = 목표 달성을 위한 기능·책임·관계를 가진 사람/그룹"},
+
+  // ===== FOUR DIMENSIONS (16-25) =====
+  {id:16,cat:'dimension',q:"How many dimensions of service management are defined in ITIL 4?",
+    o:["Three","Four","Five","Six"],a:1,
+    en:"ITIL 4 defines FOUR dimensions: (1) Organizations and People, (2) Information and Technology, (3) Partners and Suppliers, (4) Value Streams and Processes.",
+    ko:"4가지 차원: ①조직 및 인력, ②정보 및 기술, ③파트너 및 공급업체, ④가치 흐름 및 프로세스.",
+    why:"B가 정답인 이유: ITIL v4는 정확히 4가지 차원을 정의합니다. 이 4가지는 모든 서비스와 제품에 반드시 고려되어야 합니다.",
+    tip:"★ 4차원 암기: 조직인력 / 정보기술 / 파트너공급 / 가치흐름프로세스"},
+
+  {id:17,cat:'dimension',q:"Which dimension includes consideration of organizational culture and staffing levels?",
+    o:["Information and Technology","Value Streams and Processes","Organizations and People","Partners and Suppliers"],a:2,
+    en:"'Organizations and People' covers organizational structures, roles, responsibilities, cultures, staffing levels, and capabilities.",
+    ko:"'조직 및 인력' 차원은 조직 구조, 역할, 책임, 문화, 인력 수준, 역량을 다룹니다.",
+    why:"C가 정답인 이유: 문화(Culture)와 인력 수준(Staffing)은 사람과 조직에 관한 것이므로 Organizations and People 차원입니다. A는 기술, B는 워크플로우, D는 외부 관계에 초점입니다.",
+    tip:"★ 문화, 인력, 역할, 책임 → Organizations and People"},
+
+  {id:18,cat:'dimension',q:"An organization is deciding whether to use cloud services or on-premise infrastructure. Which dimension is MOST relevant?",
+    o:["Organizations and People","Information and Technology","Partners and Suppliers","Value Streams and Processes"],a:1,
+    en:"The 'Information and Technology' dimension covers information and knowledge used in service delivery, and the technologies required. Cloud vs on-premise decisions fall here.",
+    ko:"'정보 및 기술' 차원은 서비스 제공에 사용되는 정보·지식과 필요한 기술을 다룹니다.",
+    why:"B가 정답인 이유: 클라우드 vs 온프레미스는 기술 인프라 결정이므로 Information and Technology 차원입니다. C(Partners and Suppliers)도 관련될 수 있지만, 핵심 결정은 기술 차원입니다.",
+    tip:"★ 기술 결정(클라우드/온프레미스), 데이터 관리 → Information and Technology"},
+
+  {id:19,cat:'dimension',q:"A company has outsourced its network management to a third-party vendor. Which dimension does this PRIMARILY relate to?",
+    o:["Organizations and People","Information and Technology","Partners and Suppliers","Value Streams and Processes"],a:2,
+    en:"'Partners and Suppliers' covers relationships with other organizations involved in service design, deployment, delivery, and support. Outsourcing arrangements are central to this dimension.",
+    ko:"'파트너 및 공급업체' 차원은 서비스에 관여하는 외부 조직과의 관계를 다룹니다.",
+    why:"C가 정답인 이유: 아웃소싱은 외부 조직과의 관계이므로 Partners and Suppliers 차원의 핵심 주제입니다.",
+    tip:"★ 외부 벤더, 아웃소싱, 계약 → Partners and Suppliers"},
+
+  {id:20,cat:'dimension',q:"Which dimension focuses on how different parts of an organization work together through activities and workflows to enable value creation?",
+    o:["Organizations and People","Information and Technology","Partners and Suppliers","Value Streams and Processes"],a:3,
+    en:"'Value Streams and Processes' defines activities, workflows, controls, and procedures needed to achieve objectives.",
+    ko:"'가치 흐름 및 프로세스' 차원은 목표 달성에 필요한 활동, 워크플로우, 통제, 절차를 정의합니다.",
+    why:"D가 정답인 이유: 활동(Activities)과 워크플로우(Workflows)를 통한 가치 창출은 Value Streams and Processes 차원의 핵심입니다.",
+    tip:"★ 활동, 워크플로우, 가치흐름 → Value Streams and Processes"},
+
+  {id:21,cat:'dimension',q:"The four dimensions are subject to external factors. Which acronym represents these factors?",
+    o:["SWOT","RACI","PESTLE","VUCA"],a:2,
+    en:"External factors are represented by PESTLE: Political, Economic, Social, Technological, Legal, and Environmental factors.",
+    ko:"외부 요인은 PESTLE: 정치적, 경제적, 사회적, 기술적, 법적, 환경적 요인입니다.",
+    why:"C가 정답인 이유: PESTLE은 ITIL v4에서 4가지 차원에 영향을 미치는 외부 요인을 나타내는 공식 약어입니다. A(SWOT)는 전략 분석 도구, B(RACI)는 역할 매트릭스, D(VUCA)는 불확실성 환경 설명입니다.",
+    tip:"★ 외부 요인 = PESTLE (Political, Economic, Social, Technological, Legal, Environmental)"},
+
+  {id:22,cat:'dimension',q:"An organization is reviewing how its customer service team interacts and shares knowledge internally. Which dimension is MOST relevant?",
+    o:["Organizations and People","Value Streams and Processes","Information and Technology","Partners and Suppliers"],a:0,
+    en:"Team interactions, knowledge sharing, and organizational culture are part of the 'Organizations and People' dimension.",
+    ko:"팀 상호작용, 지식 공유, 조직 문화는 '조직 및 인력' 차원에 해당합니다.",
+    why:"A가 정답인 이유: 사람들 간의 상호작용과 지식 공유는 Organizations and People 차원의 핵심 주제입니다. C(Information and Technology)는 기술 도구에 초점이므로 혼동하지 마세요.",
+    tip:"★ 사람 간 상호작용, 문화, 지식 공유 → Organizations and People"},
+
+  {id:23,cat:'dimension',q:"Which is an example within the 'Information and Technology' dimension?",
+    o:["Managing relationships with third-party suppliers","Whether organizational culture supports collaboration","What data is managed by services and how it should be protected","How value is created through end-to-end workflows"],a:2,
+    en:"Data management and data protection are within the 'Information and Technology' dimension.",
+    ko:"데이터 관리와 보호는 '정보 및 기술' 차원에 해당합니다.",
+    why:"C가 정답인 이유: 데이터 관리와 보호는 Information and Technology의 핵심 주제입니다. A는 Partners, B는 Organizations and People, D는 Value Streams and Processes 차원입니다.",
+    tip:"★ 데이터 관리, 정보 보안, 기술 선택 → Information and Technology"},
+
+  {id:24,cat:'dimension',q:"Which dimension ensures that activities are efficient and that end-to-end value delivery is clearly defined?",
+    o:["Organizations and People","Information and Technology","Partners and Suppliers","Value Streams and Processes"],a:3,
+    en:"'Value Streams and Processes' ensures all activities are efficient and the end-to-end value creation flow is understood.",
+    ko:"'가치 흐름 및 프로세스'는 모든 활동의 효율성과 엔드-투-엔드 가치 흐름을 보장합니다.",
+    why:"D가 정답인 이유: 효율성(Efficiency)과 엔드-투-엔드(End-to-end) 가치 흐름은 Value Streams and Processes 차원의 핵심 관심사입니다.",
+    tip:"★ 효율성, 엔드-투-엔드 가치 흐름 → Value Streams and Processes"},
+
+  {id:25,cat:'dimension',q:"An organization realizes its service desk team lacks the authority to make decisions and resolve issues. This is a concern related to which dimension?",
+    o:["Information and Technology","Value Streams and Processes","Partners and Suppliers","Organizations and People"],a:3,
+    en:"Roles, responsibilities, and authority structures are part of the 'Organizations and People' dimension.",
+    ko:"역할, 책임, 권한 구조는 '조직 및 인력' 차원에 해당합니다.",
+    why:"D가 정답인 이유: 권한(Authority)과 의사결정 구조는 Organizations and People 차원의 주제입니다. 기술이 아닌 사람과 조직 구조의 문제입니다.",
+    tip:"★ 권한, 역할, 책임 구조 문제 → Organizations and People"},
+
+  // ===== GUIDING PRINCIPLES (26-40) =====
+  {id:26,cat:'principle',q:"How many guiding principles does ITIL 4 define?",
+    o:["Five","Six","Seven","Eight"],a:2,
+    en:"ITIL 4 defines SEVEN guiding principles: Focus on value, Start where you are, Progress iteratively with feedback, Collaborate and promote visibility, Think and work holistically, Keep it simple and practical, Optimize and automate.",
+    ko:"7가지 가이딩 원칙: ①가치에 집중, ②현 위치에서 시작, ③피드백과 반복, ④협업·가시성, ⑤전체적 사고, ⑥단순·실용, ⑦최적화·자동화",
+    why:"C가 정답인 이유: ITIL v4는 정확히 7가지 가이딩 원칙을 정의합니다. 이 원칙들은 보편적으로 어떤 상황에서든 적용 가능합니다.",
+    tip:"★ 7원칙 암기: 가치-현위치-반복-협업-전체-단순-자동화"},
+
+  {id:27,cat:'principle',q:"An IT team wants to ensure all planned changes align with the organization's goals. Which guiding principle should be their PRIMARY guide?",
+    o:["Keep it simple and practical","Focus on value","Progress iteratively with feedback","Optimize and automate"],a:1,
+    en:"'Focus on value' means everything the organization does should link to value for stakeholders. When planning improvements, the first question should be: how does this create value?",
+    ko:"'가치에 집중' 원칙은 모든 활동이 가치 창출에 연결되어야 함을 의미합니다.",
+    why:"B가 정답인 이유: 조직 목표와의 정렬(Alignment)은 가치 창출에 직결됩니다. 변경이 조직 목표에 맞는지 확인하는 것은 곧 '이것이 가치를 만드는가?'를 묻는 것입니다.",
+    tip:"★ 모든 활동을 가치와 연결 → Focus on Value"},
+
+  {id:28,cat:'principle',q:"Rather than starting from scratch, an organization assesses and reuses existing processes and capabilities for a new ITSM tool. Which principle is this?",
+    o:["Progress iteratively with feedback","Focus on value","Start where you are","Keep it simple and practical"],a:2,
+    en:"'Start where you are' advises against discarding what already exists. Existing services and capabilities should be assessed and leveraged.",
+    ko:"'현 위치에서 시작' 원칙은 기존에 있는 것을 고려 없이 버리지 말라고 조언합니다.",
+    why:"C가 정답인 이유: 기존 프로세스와 역량을 평가하고 재사용하는 것은 '현 위치에서 시작' 원칙의 직접적 적용입니다. 처음부터 다시 만들지 않고 기존의 것을 활용합니다.",
+    tip:"★ 기존 것 활용, 처음부터 시작 X → Start Where You Are"},
+
+  {id:29,cat:'principle',q:"A project team divides a large digital transformation into smaller increments and gathers feedback after each iteration. Which principle does this reflect?",
+    o:["Think and work holistically","Collaborate and promote visibility","Progress iteratively with feedback","Optimize and automate"],a:2,
+    en:"'Progress iteratively with feedback' means resisting the urge to do everything at once. Work in smaller sections, seek feedback, and improve continuously.",
+    ko:"'피드백과 함께 반복적으로 진행' 원칙은 한 번에 모든 것을 하려는 충동을 억제하라고 말합니다.",
+    why:"C가 정답인 이유: '작은 단위로 나누고(Increments)' + '반복 후 피드백(Feedback after each iteration)'이라는 두 키워드가 이 원칙과 정확히 일치합니다.",
+    tip:"★ 작은 단계 + 지속적 피드백 → Progress Iteratively with Feedback"},
+
+  {id:30,cat:'principle',q:"An IT manager invites frontline staff, customers, and other teams to share input before finalizing an improvement plan. Which principle is she applying?",
+    o:["Keep it simple and practical","Focus on value","Collaborate and promote visibility","Start where you are"],a:2,
+    en:"'Collaborate and promote visibility' emphasizes involving the right people, sharing information, and removing silos.",
+    ko:"'협업하고 가시성 증진' 원칙은 올바른 사람을 참여시키고 정보를 공유하며 사일로를 제거하는 것을 강조합니다.",
+    why:"C가 정답인 이유: 다양한 이해관계자(프론트라인 직원, 고객, 다른 팀)를 참여시키는 것은 Collaborate and Promote Visibility의 직접적 적용입니다.",
+    tip:"★ 이해관계자 참여 + 정보 공유 → Collaborate and Promote Visibility"},
+
+  {id:31,cat:'principle',q:"The development, operations, and business teams are working in separate silos. Which guiding principle should they apply?",
+    o:["Optimize and automate","Think and work holistically","Keep it simple and practical","Progress iteratively with feedback"],a:1,
+    en:"'Think and work holistically' means no service or process stands alone. Everything must be considered in the context of the whole system. Silos break holistic thinking.",
+    ko:"'전체적으로 생각하고 작업' 원칙은 어떤 서비스, 프로세스도 단독으로 존재하지 않음을 의미합니다.",
+    why:"B가 정답인 이유: 사일로(Silos)는 전체적 사고의 반대입니다. 팀 간 분리를 해결하려면 전체 시스템의 맥락에서 생각해야 하므로 Think and Work Holistically가 답입니다.",
+    tip:"★ 사일로 타파, 전체 연결 이해 → Think and Work Holistically"},
+
+  {id:32,cat:'principle',q:"A team finds several steps in a process that add no value and create unnecessary complexity. They eliminate these steps. Which principle?",
+    o:["Start where you are","Collaborate and promote visibility","Keep it simple and practical","Focus on value"],a:2,
+    en:"'Keep it simple and practical' means using the minimum number of steps to accomplish an objective. If an activity doesn't add value, eliminate or simplify it.",
+    ko:"'단순하고 실용적으로 유지' 원칙은 목표 달성에 최소한의 단계를 사용하라고 말합니다.",
+    why:"C가 정답인 이유: 가치를 더하지 않는 불필요한 복잡성(Unnecessary complexity)을 제거하는 것은 Keep It Simple and Practical의 핵심입니다. D(Focus on Value)도 관련되지만, 불필요한 단계 제거라는 구체적 행동은 이 원칙에 더 직접적입니다.",
+    tip:"★ 불필요한 복잡성 제거, 가치 없는 단계 삭제 → Keep It Simple and Practical"},
+
+  {id:33,cat:'principle',q:"An organization wants to reduce manual tasks. They plan to FIRST optimize processes, THEN apply automation. Which principle?",
+    o:["Think and work holistically","Focus on value","Keep it simple and practical","Optimize and automate"],a:3,
+    en:"'Optimize and automate' — the sequence matters: optimize FIRST, then automate. Automating a broken process just makes it fail faster.",
+    ko:"'최적화 및 자동화' — 순서가 중요합니다: 먼저 최적화, 그 다음 자동화.",
+    why:"D가 정답인 이유: '먼저 최적화한 후 자동화'라는 순서가 이 원칙의 핵심입니다. 비효율적인 프로세스를 그대로 자동화하면 실패만 빨라집니다.",
+    tip:"★ 순서 중요: 최적화 먼저 → 그 다음 자동화 (반대 순서 X)"},
+
+  {id:34,cat:'principle',q:"Which statement BEST reflects the guiding principle 'Focus on value'?",
+    o:["All improvements should be fully planned before any action is taken","Every activity by the service provider should contribute to value for consumers","Services should only be delivered when cost is fully justified","Technology should be leveraged to reduce all manual activities"],a:1,
+    en:"'Focus on value' means everything should create value for stakeholders. Every activity should be linked to value creation.",
+    ko:"'가치에 집중'은 모든 활동이 이해관계자를 위한 가치를 창출해야 함을 의미합니다.",
+    why:"B가 정답인 이유: '모든 활동이 가치에 기여해야 한다'는 것이 Focus on Value의 핵심입니다. A는 Progress Iteratively에 반하고, C는 비용 정당화에 편향되며, D는 Optimize and Automate입니다.",
+    tip:"★ 모든 활동 = 가치 창출로 연결 → Focus on Value"},
+
+  {id:35,cat:'principle',q:"A new IT manager wants to completely rebuild ITSM processes from scratch without reviewing existing documentation. Which principle is she VIOLATING?",
+    o:["Optimize and automate","Focus on value","Start where you are","Collaborate and promote visibility"],a:2,
+    en:"'Start where you are' advises against discarding existing assets without proper assessment. Rebuilding from scratch wastes time and ignores valuable existing work.",
+    ko:"'현 위치에서 시작' 원칙은 기존 자산을 적절한 평가 없이 버리지 말라고 조언합니다.",
+    why:"C가 정답인 이유: 기존 문서와 프로세스를 검토하지 않고 처음부터 재구축하는 것은 Start Where You Are 원칙의 정면 위반입니다. VIOLATING이라는 키워드에 주목하세요.",
+    tip:"★ 기존 검토 없이 처음부터 재구축 = Start Where You Are 위반"},
+
+  {id:36,cat:'principle',q:"An organization introduces feedback loops at each stage of implementing a new change management process. This BEST represents which principle?",
+    o:["Keep it simple and practical","Progress iteratively with feedback","Think and work holistically","Start where you are"],a:1,
+    en:"Feedback loops at each stage are a direct application of 'Progress iteratively with feedback.' Regular feedback enables early detection of problems.",
+    ko:"각 단계의 피드백 루프는 '피드백과 함께 반복적으로 진행' 원칙의 직접적 적용입니다.",
+    why:"B가 정답인 이유: 피드백 루프(Feedback Loops)와 각 단계(Each Stage)라는 두 키워드가 이 원칙과 정확히 일치합니다.",
+    tip:"★ 피드백 루프, 조기 문제 발견 → Progress Iteratively with Feedback"},
+
+  {id:37,cat:'principle',q:"A manager says: 'All stakeholders should have the same understanding of our service improvement progress.' Which principle?",
+    o:["Think and work holistically","Focus on value","Collaborate and promote visibility","Optimize and automate"],a:2,
+    en:"Ensuring all stakeholders have the same understanding and information is shared transparently reflects 'Collaborate and promote visibility.'",
+    ko:"모든 이해관계자가 동일한 이해를 갖도록 정보를 투명하게 공유하는 것은 '협업하고 가시성 증진' 원칙입니다.",
+    why:"C가 정답인 이유: '모든 이해관계자가 같은 이해를 갖게 한다'는 것은 가시성(Visibility)과 투명성(Transparency)의 핵심으로, Collaborate and Promote Visibility 원칙입니다.",
+    tip:"★ 정보 투명성, 이해관계자 공유 → Collaborate and Promote Visibility"},
+
+  {id:38,cat:'principle',q:"Which guiding principle is MOST concerned with avoiding waste and unnecessary steps?",
+    o:["Focus on value","Progress iteratively with feedback","Keep it simple and practical","Think and work holistically"],a:2,
+    en:"'Keep it simple and practical' is most directly concerned with eliminating waste and unnecessary complexity, inspired by Lean thinking.",
+    ko:"'단순하고 실용적으로 유지'는 낭비와 불필요한 복잡성 제거에 가장 직접적으로 관련됩니다.",
+    why:"C가 정답인 이유: 낭비(Waste)와 불필요한 단계(Unnecessary steps)의 제거는 Keep It Simple and Practical의 핵심입니다. A(Focus on Value)도 관련되지만, 낭비 제거라는 구체적 행위는 이 원칙이 더 직접적입니다.",
+    tip:"★ 낭비 제거, 불필요한 복잡성 제거 → Keep It Simple and Practical"},
+
+  {id:39,cat:'principle',q:"A team asks: 'Does this metric help us improve service for our customers?' This BEST reflects which principle?",
+    o:["Start where you are","Optimize and automate","Progress iteratively with feedback","Focus on value"],a:3,
+    en:"Asking 'does this help customers?' is a direct application of 'Focus on value.' Everything should be evaluated against its contribution to value.",
+    ko:"'이것이 고객에게 도움이 되는가?'라는 질문은 '가치에 집중' 원칙의 직접적 적용입니다.",
+    why:"D가 정답인 이유: '고객을 위한 서비스 개선에 도움이 되는가?'라는 질문 자체가 가치 기여도를 평가하는 것으로, Focus on Value의 본질입니다.",
+    tip:"★ '이것이 가치를 더하는가?' 라는 질문 = Focus on Value"},
+
+  {id:40,cat:'principle',q:"The guiding principles of ITIL 4 are described as universal. What does this mean?",
+    o:["They apply only to large enterprises with complex IT environments","They can be applied to any initiative in any organization, regardless of the situation","They are mandatory and must all be followed simultaneously","They replace all previous frameworks and methodologies"],a:1,
+    en:"The guiding principles are universal recommendations applicable in any organization, at any level, in any situation. They complement, not replace, other frameworks.",
+    ko:"가이딩 원칙은 어떤 조직, 어떤 수준, 어떤 상황에서도 적용할 수 있는 보편적 권고사항입니다.",
+    why:"B가 정답인 이유: Universal(보편적)은 '어떤 조직, 어떤 상황에서든 적용 가능'을 의미합니다. A(대기업만), C(필수+동시), D(다른 프레임워크 대체)는 모두 틀립니다.",
+    tip:"★ 가이딩 원칙 = 보편적, 상황에 맞게 적용, 다른 프레임워크와 보완"},
+
+  // ===== SVS (41-45) =====
+  {id:41,cat:'svs',q:"Which lists ALL components of the ITIL 4 Service Value System (SVS)?",
+    o:["Service Lifecycle, Processes, Functions, and Roles","Guiding Principles, Governance, Service Value Chain, Practices, and Continual Improvement","Four Dimensions, Value Streams, Service Catalog, and SLAs","Strategy, Design, Transition, Operation, and Continual Service Improvement"],a:1,
+    en:"The SVS has five components: (1) Guiding Principles, (2) Governance, (3) Service Value Chain, (4) Practices (34), (5) Continual Improvement. Inputs: Opportunity + Demand. Output: Value.",
+    ko:"SVS 5가지 구성요소: ①가이딩 원칙, ②거버넌스, ③서비스 가치 체인, ④프랙티스(34개), ⑤지속적 개선.",
+    why:"B가 정답인 이유: SVS의 5가지 구성요소를 정확히 나열합니다. A는 v3의 용어, C는 SVS 구성요소가 아닌 항목 포함, D는 v3의 서비스 라이프사이클 5단계입니다.",
+    tip:"★ SVS = 가이딩원칙 + 거버넌스 + SVC + 프랙티스 + 지속적개선"},
+
+  {id:42,cat:'svs',q:"What is the MAIN purpose of the ITIL 4 Service Value System (SVS)?",
+    o:["To define a rigid set of processes all organizations must follow","To ensure the organization continually co-creates value with all stakeholders through the use and management of products and services","To replace all existing IT service management frameworks","To provide a catalog of IT services for internal customers"],a:1,
+    en:"The SVS ensures the organization continually co-creates value with all stakeholders. It is flexible, not rigid.",
+    ko:"SVS의 목적은 조직이 모든 이해관계자와 지속적으로 가치를 공동 창출하도록 보장하는 것입니다.",
+    why:"B가 정답인 이유: '지속적으로(Continually)' + '가치 공동 창출(Co-creates value)' + '모든 이해관계자(All stakeholders)'가 핵심 키워드입니다. A(rigid/경직적)는 SVS의 특성과 반대입니다.",
+    tip:"★ SVS 목적 = 조직 전체가 함께 가치를 지속적으로 공동 창출"},
+
+  {id:43,cat:'svs',q:"What are the TWO inputs to the ITIL 4 Service Value System?",
+    o:["Value and outcomes","Processes and functions","Opportunity and demand","Strategy and tactics"],a:2,
+    en:"The two inputs to the SVS are Opportunity (possibilities to add value) and Demand (need for products and services). The output is Value.",
+    ko:"SVS의 입력: ①기회(Opportunity), ②수요(Demand). 출력은 가치(Value)입니다.",
+    why:"C가 정답인 이유: SVS의 공식 입력은 Opportunity(기회)와 Demand(수요)입니다. A(Value)는 출력이지 입력이 아닙니다.",
+    tip:"★ SVS: 입력 = Opportunity + Demand → 출력 = Value"},
+
+  {id:44,cat:'svs',q:"What role does 'governance' play within the SVS?",
+    o:["Defines the technical architecture of IT services","Directs and controls the organization to achieve its objectives and ensures accountability","Is responsible for managing incidents and service requests","Replaces the need for service level agreements"],a:1,
+    en:"Governance directs and controls the organization, ensures alignment with objectives, and ensures accountability through evaluation, direction, and monitoring.",
+    ko:"거버넌스는 조직이 목표에 맞게 방향이 설정되고 통제되며 책임이 보장되도록 합니다.",
+    why:"B가 정답인 이유: 거버넌스의 세 가지 핵심 활동은 평가(Evaluate), 방향 설정(Direct), 모니터링(Monitor)이며, 이를 통해 조직을 목표에 맞게 통제하고 책임을 보장합니다.",
+    tip:"★ 거버넌스 = 평가(Evaluate) + 방향 설정(Direct) + 모니터링(Monitor)"},
+
+  {id:45,cat:'svs',q:"Where does 'continual improvement' sit within the SVS?",
+    o:["It is a separate practice that only applies to operational services","It applies to ALL components of the SVS — not just services, but practices, governance, and the SVS itself","It is the final stage of the service lifecycle","It only applies when a service has failed to meet its SLA"],a:1,
+    en:"Continual improvement applies to ALL components of the SVS. It is embedded throughout the entire system.",
+    ko:"지속적 개선은 SVS의 모든 구성요소에 적용됩니다 — 제품·서비스뿐만 아니라 프랙티스, 거버넌스, SVS 자체도 포함됩니다.",
+    why:"B가 정답인 이유: 지속적 개선은 특정 영역에 한정되지 않고 SVS 전체에 내재됩니다. A(운영 서비스만), C(최종 단계), D(SLA 미충족 시만)는 모두 범위를 부당하게 제한합니다.",
+    tip:"★ 지속적 개선 = SVS의 모든 구성요소에 적용 (일부가 아닌 전체)"},
+
+  // ===== SERVICE VALUE CHAIN (46-55) =====
+  {id:46,cat:'svc',q:"How many activities are defined in the ITIL 4 Service Value Chain (SVC)?",
+    o:["Four","Five","Six","Seven"],a:2,
+    en:"The SVC has SIX activities: Plan, Improve, Engage, Design and Transition, Obtain/Build, Deliver and Support.",
+    ko:"SVC의 6가지 활동: 계획, 개선, 참여, 설계 및 전환, 획득/구축, 제공 및 지원.",
+    why:"C가 정답인 이유: ITIL v4 SVC는 정확히 6가지 활동을 정의합니다. 이 6가지를 다양하게 조합하여 가치 흐름을 만들 수 있습니다.",
+    tip:"★ SVC 6가지: Plan-Improve-Engage-Design&Transition-Obtain/Build-Deliver&Support"},
+
+  {id:47,cat:'svc',q:"Which SVC activity ensures a shared understanding of vision, current status, and improvement direction?",
+    o:["Engage","Deliver and Support","Plan","Improve"],a:2,
+    en:"'Plan' ensures all stakeholders have a shared understanding of the organization's vision, current status, and direction for improvement.",
+    ko:"'계획(Plan)' 활동은 모든 이해관계자가 조직의 비전, 현재 상태, 개선 방향에 대한 공유된 이해를 갖도록 합니다.",
+    why:"C가 정답인 이유: 비전(Vision), 현재 상태(Current Status), 개선 방향(Improvement Direction)의 공유된 이해(Shared Understanding)는 Plan 활동의 핵심 목적입니다.",
+    tip:"★ 공유된 이해 + 비전 + 개선 방향 = Plan"},
+
+  {id:48,cat:'svc',q:"Which SVC activity provides understanding of consumer needs and ensures continual engagement with stakeholders?",
+    o:["Plan","Obtain/Build","Engage","Improve"],a:2,
+    en:"'Engage' provides understanding of stakeholder needs, ensures transparency, and maintains continual engagement and good relationships.",
+    ko:"'참여(Engage)' 활동은 이해관계자 니즈 이해, 투명성 확보, 지속적 참여 및 관계 유지를 담당합니다.",
+    why:"C가 정답인 이유: 소비자 니즈(Consumer Needs)를 파악하고 이해관계자와의 지속적 참여(Continual Engagement)를 유지하는 것이 Engage 활동의 핵심입니다.",
+    tip:"★ 이해관계자 참여, 니즈 파악, 관계 유지 = Engage"},
+
+  {id:49,cat:'svc',q:"Which SVC activity ensures services continuously meet stakeholder expectations for quality, cost, and time to market?",
+    o:["Plan","Improve","Deliver and Support","Design and Transition"],a:3,
+    en:"'Design and Transition' ensures products and services continually meet expectations for quality, costs, and time to market.",
+    ko:"'설계 및 전환' 활동은 품질, 비용, 출시 시간에 대한 기대를 충족하도록 합니다.",
+    why:"D가 정답인 이유: 품질(Quality), 비용(Cost), 출시 시간(Time to Market)이라는 세 가지 기대치 충족은 Design and Transition의 핵심 목적입니다. C(Deliver and Support)는 일상적 운영에 초점입니다.",
+    tip:"★ 품질+비용+출시시간 충족 = Design and Transition"},
+
+  {id:50,cat:'svc',q:"Which SVC activity ensures service components are available when and where needed, meeting agreed specifications?",
+    o:["Engage","Plan","Obtain/Build","Deliver and Support"],a:2,
+    en:"'Obtain/Build' ensures service components are available when and where needed, and meet agreed specifications.",
+    ko:"'획득/구축' 활동은 서비스 구성요소가 필요한 시간과 장소에서 사용 가능하고 사양을 충족하도록 합니다.",
+    why:"C가 정답인 이유: 서비스 구성요소(Service Components)의 가용성(Available)과 사양 충족(Agreed Specifications)은 Obtain/Build의 핵심입니다. 구매, 개발, 조달 등의 활동이 여기에 해당합니다.",
+    tip:"★ 서비스 구성요소 가용성 + 사양 충족 = Obtain/Build"},
+
+  {id:51,cat:'svc',q:"Which SVC activity ensures services are delivered and supported according to agreed specifications and expectations?",
+    o:["Improve","Engage","Plan","Deliver and Support"],a:3,
+    en:"'Deliver and Support' covers day-to-day delivery and support — running live services, handling incidents, fulfilling requests, and maintaining performance.",
+    ko:"'제공 및 지원'은 합의된 사양에 따른 서비스 제공과 지원을 담당합니다.",
+    why:"D가 정답인 이유: 일상적 서비스 운영(Day-to-day), 인시던트 처리, 서비스 요청 이행이 Deliver and Support의 핵심입니다.",
+    tip:"★ 일상적 서비스 운영 + 인시던트 처리 = Deliver and Support"},
+
+  {id:52,cat:'svc',q:"The 'Improve' activity in the SVC ensures what?",
+    o:["Services are delivered consistently every day","Continual improvement is embedded across ALL value chain activities","Service changes are approved and implemented quickly","Stakeholder requirements are captured at the start of each project"],a:1,
+    en:"'Improve' ensures continual improvement across all value chain activities and the four dimensions. It is embedded throughout — not a separate phase.",
+    ko:"'개선' 활동은 모든 가치 체인 활동에 걸쳐 지속적 개선을 보장합니다.",
+    why:"B가 정답인 이유: Improve 활동은 특정 영역이 아닌 전체 가치 체인에 내재되어(Embedded) 있습니다. A는 Deliver and Support, C는 Change Enablement, D는 Engage의 영역입니다.",
+    tip:"★ Improve = 가치 체인 전체에 내재된 지속적 개선"},
+
+  {id:53,cat:'svc',q:"Which of the following BEST describes a 'value stream' in ITIL 4?",
+    o:["A financial report showing monetary value generated by IT services","A series of steps an organization undertakes to create and deliver products and services to consumers","A database of all services offered in the service catalog","A method for measuring IT process efficiency"],a:1,
+    en:"A value stream is a series of steps that an organization undertakes to create and deliver products and services to a service consumer.",
+    ko:"가치 흐름(Value Stream)은 소비자에게 제품과 서비스를 창출·전달하기 위한 일련의 단계입니다.",
+    why:"B가 정답인 이유: Value Stream의 공식 정의입니다. SVC 활동들을 조합하여 특정 시나리오에 맞는 Value Stream을 구성할 수 있습니다.",
+    tip:"★ Value Stream = 가치 창출·전달을 위한 일련의 단계"},
+
+  {id:54,cat:'svc',q:"How does the SVC differ from the ITIL v3 Service Lifecycle?",
+    o:["The SVC has more stages than the Service Lifecycle","The SVC is a flexible model where activities can be combined in various ways, while the Lifecycle was a fixed sequential model","The SVC focuses only on operational services","The SVC eliminates the need for service design"],a:1,
+    en:"The v3 Lifecycle was relatively linear and sequential. The v4 SVC is flexible — activities can be combined in many different ways to create value streams.",
+    ko:"v3 라이프사이클은 선형적·순차적이었고, v4 SVC는 유연하게 활동을 조합할 수 있습니다.",
+    why:"B가 정답인 이유: 핵심 차이는 유연성(Flexibility)입니다. v3는 고정된 순서(Fixed Sequential), v4는 다양한 조합 가능(Various Ways). 이 유연성이 Agile, DevOps를 지원합니다.",
+    tip:"★ v3=선형·순차적 / v4 SVC=유연·다양한 조합 가능"},
+
+  {id:55,cat:'svc',q:"Which SVC activity would a service desk analyst PRIMARILY contribute to?",
+    o:["Plan","Obtain/Build","Design and Transition","Deliver and Support"],a:3,
+    en:"Service desk analysts primarily contribute to 'Deliver and Support' — the activity focused on day-to-day service delivery and incident handling.",
+    ko:"서비스 데스크 분석가는 주로 '제공 및 지원' 활동에 기여합니다.",
+    why:"D가 정답인 이유: 서비스 데스크의 핵심 업무(인시던트 처리, 서비스 요청 이행, 일상적 지원)는 Deliver and Support 활동에 해당합니다.",
+    tip:"★ 서비스 데스크 = Deliver and Support가 주요 기여 영역"},
+
+  // ===== PRACTICES (56-100) =====
+  {id:56,cat:'practice',q:"What is the purpose of the 'Incident Management' practice?",
+    o:["To minimize the impact of incidents by restoring normal service operation as quickly as possible","To identify and analyze causes of incidents to prevent recurrence","To assess and authorize changes to minimize disruption","To provide a single point of contact for all user requests"],a:0,
+    en:"Incident Management minimizes the negative impact by restoring normal service operation as quickly as possible. Focus is on SPEED of restoration, not root cause analysis.",
+    ko:"인시던트 관리의 목적은 최대한 빠르게 정상 서비스를 복구하여 부정적 영향을 최소화하는 것입니다.",
+    why:"A가 정답인 이유: 인시던트 관리의 핵심은 '빠른 복구(As quickly as possible)'입니다. B(원인 분석)는 Problem Management, C(변경 승인)는 Change Enablement, D(단일 연락창구)는 Service Desk입니다.",
+    tip:"★ 인시던트 관리 = 빠른 복구 (원인 분석은 문제 관리의 영역)"},
+
+  {id:57,cat:'practice',q:"How are incidents classified in ITIL 4?",
+    o:["By the cost of resolution","By priority, based on their impact and urgency","By the team responsible for resolving them","By the type of technology involved"],a:1,
+    en:"Incidents are classified by priority, determined by impact (how many affected) and urgency (how quickly it needs resolution).",
+    ko:"인시던트는 영향도(Impact)와 긴급도(Urgency)의 조합으로 결정되는 우선순위(Priority)로 분류됩니다.",
+    why:"B가 정답인 이유: Priority = Impact + Urgency는 ITIL의 핵심 공식입니다. 우선순위가 높을수록 더 빠르고 많은 자원이 투입됩니다.",
+    tip:"★ Priority = Impact(영향도) + Urgency(긴급도)"},
+
+  {id:58,cat:'practice',q:"A major incident is impacting all users. According to Incident Management, what should happen FIRST?",
+    o:["Identify the root cause","Restore service as quickly as possible","Raise a problem record","Update the configuration management database"],a:1,
+    en:"First priority in a major incident: restore service as quickly as possible — even with a workaround. Root cause analysis comes AFTER service is restored.",
+    ko:"주요 인시던트 시 첫 번째 우선순위는 서비스 복구입니다. 근본 원인 분석은 복구 후에 진행됩니다.",
+    why:"B가 정답인 이유: FIRST라는 키워드가 핵심입니다. 인시던트 관리에서는 항상 복구가 먼저이고, 원인 분석(A), 문제 기록(C), CMDB 업데이트(D)는 모두 이후에 진행됩니다.",
+    tip:"★ Major Incident 시: 복구 먼저 → 원인 분석은 나중"},
+
+  {id:59,cat:'practice',q:"What distinguishes a major incident from a regular incident?",
+    o:["A major incident always involves hardware failure","A major incident requires a separate procedure due to its significant business impact","A major incident can only be resolved by senior management","A major incident is always resolved within one hour"],a:1,
+    en:"A major incident has significant business impact and requires a separate procedure with dedicated resources and an incident coordinator.",
+    ko:"주요 인시던트는 상당한 비즈니스 영향을 가지며 별도의 절차를 필요로 합니다.",
+    why:"B가 정답인 이유: Major Incident의 핵심 특징은 '별도의 절차(Separate Procedure)'와 '상당한 비즈니스 영향(Significant Business Impact)'입니다. 하드웨어 고장(A)이 아니라 비즈니스 영향이 기준입니다.",
+    tip:"★ Major Incident = 별도 절차 + 전담 자원 + 높은 비즈니스 영향"},
+
+  {id:60,cat:'practice',q:"What is a 'workaround' in the context of Incident Management?",
+    o:["A permanent solution to an incident","A solution that reduces or eliminates the impact of an incident for which a full resolution is not yet available","A temporary pause in incident resolution activities","A documented root cause of an incident"],a:1,
+    en:"A workaround reduces or eliminates the impact when a full resolution is not yet available. It's a temporary fix to restore service while a permanent fix is developed.",
+    ko:"임시 해결책(Workaround)은 완전한 해결책이 없을 때 영향을 줄이거나 제거하는 해결책입니다.",
+    why:"B가 정답인 이유: Workaround의 핵심은 '완전한 해결책이 아직 없을 때(Not yet available)' 사용하는 임시 해결책입니다. A(영구 해결)가 아닌 임시 조치입니다.",
+    tip:"★ Workaround = 임시 해결책 (영구 수정 아님, 영향 최소화)"},
+
+  {id:61,cat:'practice',q:"What is the purpose of the 'Problem Management' practice?",
+    o:["To restore normal service operation as quickly as possible","To reduce the likelihood and impact of incidents by identifying actual and potential causes and managing known errors","To manage changes to minimize disruption","To provide a single point of contact for users"],a:1,
+    en:"Problem Management reduces incident likelihood and impact by identifying causes and managing known errors. It digs into WHY incidents happen.",
+    ko:"문제 관리는 인시던트의 원인을 파악하고 알려진 오류를 관리하여 인시던트의 가능성과 영향을 줄입니다.",
+    why:"B가 정답인 이유: 문제 관리의 핵심은 '근본 원인 파악(Identifying causes)' + '재발 방지(Reduce likelihood)'입니다. A(빠른 복구)는 인시던트 관리입니다.",
+    tip:"★ 문제 관리 = 근본 원인 파악 + 재발 방지 (인시던트 관리와 구분!)"},
+
+  {id:62,cat:'practice',q:"In Problem Management, what is a 'known error'?",
+    o:["Any incident that has not yet been resolved","A problem that has been analyzed and has a documented workaround or root cause","An error that has caused a system crash","A problem that has been permanently resolved"],a:1,
+    en:"A known error is a problem that has been analyzed and has a documented workaround or root cause — but has not yet been permanently resolved.",
+    ko:"알려진 오류(Known Error)는 분석되어 임시 해결책이나 근본 원인이 문서화되었지만 아직 영구 해결되지 않은 문제입니다.",
+    why:"B가 정답인 이유: Known Error의 3가지 조건: ①분석 완료, ②워크어라운드 또는 근본원인 문서화, ③아직 영구 해결 안 됨. D(영구 해결됨)는 이미 Known Error가 아닙니다.",
+    tip:"★ Known Error = 분석 완료 + 워크어라운드 있음 + 아직 영구 해결 안 됨"},
+
+  {id:63,cat:'practice',q:"Problem Management includes three phases. Which of the following CORRECTLY lists them?",
+    o:["Identification, Classification, Resolution","Problem Identification, Problem Control, Error Control","Analysis, Escalation, Resolution","Detection, Diagnosis, Closure"],a:1,
+    en:"Three phases: (1) Problem Identification — identifying and logging problems; (2) Problem Control — analyzing and developing workarounds; (3) Error Control — managing known errors and permanent fixes.",
+    ko:"3단계: ①문제 식별, ②문제 통제(분석+워크어라운드), ③오류 통제(알려진 오류 관리+영구 수정).",
+    why:"B가 정답인 이유: ITIL v4의 공식 3단계입니다. Problem Identification → Problem Control → Error Control 순서로 체계적으로 진행됩니다.",
+    tip:"★ 3단계: 문제 식별 → 문제 통제 → 오류 통제"},
+
+  {id:64,cat:'practice',q:"How does Problem Management relate to Incident Management?",
+    o:["They are completely separate with no relationship","Problem Management investigates root causes and prevents recurrence, while Incident Management focuses on quick restoration","Problem Management replaces Incident Management for complex issues","Incident Management is a subset of Problem Management"],a:1,
+    en:"They are complementary but distinct. Incident Management = quick restoration (fix it now). Problem Management = root cause analysis and prevention (stop it recurring).",
+    ko:"인시던트 관리=빠른 복구(단기), 문제 관리=근본 원인+재발 방지(장기). 상호 보완적이지만 별개입니다.",
+    why:"B가 정답인 이유: 두 프랙티스의 관계를 정확히 설명합니다. A(완전 분리)는 틀리고, C(대체)와 D(부분집합)도 잘못된 관계입니다.",
+    tip:"★ 인시던트관리=빠른복구(단기) / 문제관리=근본원인+재발방지(장기)"},
+
+  {id:65,cat:'practice',q:"A recurring incident's root cause is identified but no permanent fix is available. What should the Problem Management team do?",
+    o:["Escalate to senior management","Close the problem record and wait for the vendor","Document it as a known error with a workaround and update the KEDB","Raise an urgent change request to resolve immediately"],a:2,
+    en:"Document as a known error with a workaround in the Known Error Database (KEDB). This helps the service desk apply the workaround quickly next time.",
+    ko:"알려진 오류(Known Error)로 문서화하고 KEDB에 기록합니다. 서비스 데스크가 다음 발생 시 빠르게 대응할 수 있습니다.",
+    why:"C가 정답인 이유: 원인은 알지만 영구 수정이 없는 상황 = Known Error로 문서화 + KEDB 등록이 정답입니다. B(닫고 기다림)는 수동적이고, D(긴급 변경)는 영구 수정이 없으므로 부적절합니다.",
+    tip:"★ 원인 파악 + 영구수정 없음 = Known Error로 문서화 + KEDB 등록"},
+
+  {id:66,cat:'practice',q:"What is the purpose of the 'Change Enablement' practice?",
+    o:["To maximize the number of successful IT changes by ensuring risks have been properly assessed and changes are authorized","To eliminate all risk associated with changes","To ensure all changes are implemented without any testing","To manage stakeholder communication during change"],a:0,
+    en:"Change Enablement maximizes successful changes by ensuring risks are assessed and changes are authorized. It does NOT eliminate risk — it manages risk appropriately.",
+    ko:"변경 지원은 위험을 적절히 평가하고 승인하여 성공적인 변경 수를 극대화합니다. 위험을 없애는 것이 아닙니다.",
+    why:"A가 정답인 이유: 핵심 키워드는 'Maximize successful changes(성공적 변경 극대화)' + 'risks assessed(위험 평가)' + 'authorized(승인)'입니다. B(위험 완전 제거)는 불가능하며 목표도 아닙니다.",
+    tip:"★ Change Enablement = 위험 제거가 아닌 위험 관리 + 변경 성공 극대화"},
+
+  {id:67,cat:'practice',q:"Which BEST describes a 'standard change'?",
+    o:["A change that needs urgent implementation","A pre-authorized, low-risk, well-understood, and frequently performed change","A change that is unique and requires full assessment","A change always initiated by the service desk"],a:1,
+    en:"A standard change is pre-authorized, low-risk, frequently performed, and follows a pre-defined procedure. No individual approval needed each time.",
+    ko:"표준 변경은 사전 승인된, 저위험의, 자주 수행되는, 사전 절차를 따르는 변경입니다.",
+    why:"B가 정답인 이유: Standard Change의 4가지 특성: ①사전 승인(Pre-authorized), ②저위험(Low-risk), ③잘 이해됨(Well-understood), ④자주 수행(Frequently performed). 예: 정기적 비밀번호 재설정.",
+    tip:"★ Standard Change = 사전승인 + 저위험 + 사전절차 (매번 승인 불필요)"},
+
+  {id:68,cat:'practice',q:"A critical system needs an emergency patch for a security vulnerability. What type of change is this?",
+    o:["Standard change","Normal change","Emergency change","Planned change"],a:2,
+    en:"An emergency change must be implemented as soon as possible, e.g., to resolve an incident or apply urgent security patches. It has an accelerated authorization process.",
+    ko:"긴급 변경은 가능한 빨리 구현해야 하는 변경으로, 가속화된 승인 프로세스를 거칩니다.",
+    why:"C가 정답인 이유: 보안 취약점에 대한 긴급 패치는 '가능한 빨리(ASAP)' 구현해야 하므로 Emergency Change입니다. Standard(사전승인)도 Normal(일반 절차)도 아닙니다.",
+    tip:"★ Emergency Change = 긴급 구현 + 가속화 승인 + 여전히 일부 승인 필요"},
+
+  {id:69,cat:'practice',q:"What is a 'Change Advisory Board (CAB)'?",
+    o:["A permanent committee that must approve ALL changes","A group that supports assessment, prioritization, authorization, and scheduling of changes","A team responsible for implementing all changes","A regulatory body defining change standards"],a:1,
+    en:"A CAB supports assessment, prioritization, authorization, and scheduling of changes. Not all changes need to go through the CAB.",
+    ko:"CAB는 변경의 평가, 우선순위 지정, 승인, 일정을 지원합니다. 모든 변경이 CAB를 거쳐야 하는 것은 아닙니다.",
+    why:"B가 정답인 이유: CAB는 '지원(Supports)'하는 역할이지 '모든 것을 승인해야 하는(Must approve ALL)' 것이 아닙니다. A의 'ALL changes'가 함정입니다.",
+    tip:"★ CAB = 변경 평가·승인·일정 지원 (모든 변경이 거치는 것은 아님)"},
+
+  {id:70,cat:'practice',q:"Which change type requires the MOST rigorous assessment and formal authorization?",
+    o:["Standard change","Emergency change","Normal change","Recurring change"],a:2,
+    en:"Normal changes require the most rigorous assessment — full risk/impact analysis and formal authorization. Standard changes are pre-authorized, emergency changes use an accelerated process.",
+    ko:"일반 변경(Normal Change)이 가장 엄격한 평가와 공식 승인이 필요합니다.",
+    why:"C가 정답인 이유: Normal Change = 완전한 평가(Full Assessment) + 공식 승인(Formal Authorization). Standard는 이미 사전승인, Emergency는 가속화 절차를 사용합니다.",
+    tip:"★ 승인 엄격도: Normal(최고) > Emergency(가속화) > Standard(사전승인)"},
+
+  {id:71,cat:'practice',q:"What is the purpose of the 'Service Desk' practice?",
+    o:["To resolve all technical issues reported by users","To capture demand for incident resolution and service requests, and to be the entry point and single point of contact between the provider and users","To manage the full lifecycle of all IT assets","To ensure service levels are met at all times"],a:1,
+    en:"The Service Desk is the single point of contact (SPOC) between provider and users. It captures demand for incident resolution and service requests — it doesn't necessarily resolve all issues itself.",
+    ko:"서비스 데스크는 제공자와 사용자 사이의 단일 연락 창구(SPOC)로, 수요를 포착합니다.",
+    why:"B가 정답인 이유: 서비스 데스크는 '모든 기술 문제를 직접 해결(A)'하는 것이 아니라 '수요를 포착(Capture demand)'하고 '단일 연락 창구(SPOC)' 역할을 합니다.",
+    tip:"★ 서비스 데스크 = SPOC(단일 연락창구) + 수요 포착 + 진입점"},
+
+  {id:72,cat:'practice',q:"Which is NOT a valid service desk structure in ITIL 4?",
+    o:["Local service desk","Centralized service desk","Virtual service desk","Automated service desk with no human involvement"],a:3,
+    en:"ITIL 4 defines three valid structures: Local, Centralized, and Virtual. A fully automated desk with no humans is not recognized — human empathy is essential.",
+    ko:"ITIL v4의 3가지 서비스 데스크 구조: 로컬, 중앙화, 가상. 인간 없는 완전 자동화는 인정되지 않습니다.",
+    why:"D가 정답인 이유: NOT이라는 키워드에 주목하세요. ITIL v4는 서비스 데스크에서 인간의 공감 능력을 필수로 봅니다. 완전 자동화(No human involvement)는 인정된 구조가 아닙니다.",
+    tip:"★ 서비스 데스크 구조: 로컬/중앙화/가상 (완전 자동화는 없음)"},
+
+  {id:73,cat:'practice',q:"Which KEY skill is emphasized for service desk staff in ITIL 4?",
+    o:["Advanced programming ability","Empathy and emotional intelligence in understanding user needs","Expertise in all technical areas of IT","Ability to manage large-scale project implementations"],a:1,
+    en:"ITIL 4 emphasizes empathy and emotional intelligence — understanding users' feelings, especially when frustrated. Communication skills are equally or more critical than technical skills.",
+    ko:"ITIL v4는 서비스 데스크 직원의 공감 능력과 감성 지능을 강조합니다.",
+    why:"B가 정답인 이유: KEY skill이라는 키워드에 주목하세요. 기술적 능력(A, C)도 중요하지만, ITIL v4가 강조하는 핵심 역량은 공감(Empathy)과 감성 지능(Emotional Intelligence)입니다.",
+    tip:"★ 서비스 데스크 핵심 역량 = 공감(Empathy) + 감성 지능"},
+
+  {id:74,cat:'practice',q:"A service desk analyst cannot resolve an issue and transfers it to the network team. This is called:",
+    o:["Problem escalation","Incident escalation","Change authorization","Service request fulfillment"],a:1,
+    en:"Transferring to a more specialized team is incident escalation. Two types: functional (to technical team) and hierarchical (to senior management).",
+    ko:"더 전문화된 팀에 이전하는 것은 인시던트 에스컬레이션입니다.",
+    why:"B가 정답인 이유: 서비스 데스크가 해결 못하고 네트워크 팀에 이전하는 것은 기능적 에스컬레이션(Functional Escalation)으로, 인시던트 에스컬레이션의 한 유형입니다.",
+    tip:"★ 에스컬레이션: 기능적(전문팀 이전) vs 계층적(상위 관리자)"},
+
+  {id:75,cat:'practice',q:"What is a 'service request' in ITIL 4?",
+    o:["An unplanned interruption or quality reduction of a service","A formal request from a user for something to be provided as part of normal service delivery","A request to change the configuration of an IT system","An alert generated by monitoring tools indicating a potential issue"],a:1,
+    en:"A service request is a formal request from a user as part of normal service delivery — not an incident. Examples: new laptop, software installation, password reset.",
+    ko:"서비스 요청은 정상적인 서비스 제공의 일부로 제공받기 위한 공식 요청입니다. 인시던트가 아닙니다.",
+    why:"B가 정답인 이유: Service Request의 핵심은 '정상적인 서비스 제공의 일부(Normal service delivery)'라는 점입니다. A(계획되지 않은 중단)는 인시던트 정의입니다.",
+    tip:"★ 서비스 요청=정상 서비스의 일부 / 인시던트=계획되지 않은 중단"},
+
+  {id:76,cat:'practice',q:"What is the purpose of the 'Service Level Management' practice?",
+    o:["To monitor and manage all IT infrastructure components","To set clear business-based targets for service performance and ensure delivery is properly assessed against these targets","To manage the configuration of all IT assets","To handle all user complaints and escalations"],a:1,
+    en:"Service Level Management sets clear, business-based targets and ensures delivery is assessed against them. Focus is on business outcomes, not just technical metrics.",
+    ko:"서비스 레벨 관리는 비즈니스 기반 성과 목표를 설정하고 이에 대한 제공 여부를 평가합니다.",
+    why:"B가 정답인 이유: 'Business-based targets(비즈니스 기반 목표)'와 'Properly assessed(적절히 평가)'가 핵심 키워드입니다. 기술적 지표만이 아닌 비즈니스 결과에 초점을 맞춥니다.",
+    tip:"★ SLM = 비즈니스 기반 목표 설정 + SLA 합의 + 성과 모니터링"},
+
+  {id:77,cat:'practice',q:"What is a Service Level Agreement (SLA)?",
+    o:["An internal agreement between IT teams on performance targets","A documented agreement between a service provider and a customer that identifies services required and expected levels","A legal contract between an IT vendor and an organization","A technical specification of system performance requirements"],a:1,
+    en:"An SLA is a documented agreement between provider and customer identifying services and expected levels. It should be written in business language, not technical jargon.",
+    ko:"SLA는 제공자와 고객 간의 문서화된 합의로, 필요한 서비스와 예상 서비스 레벨을 정의합니다.",
+    why:"B가 정답인 이유: SLA의 핵심: ①제공자와 고객 간(A는 내부 팀 간이므로 OLA), ②문서화된 합의, ③서비스와 기대 수준 명시. C(법적 계약)는 UC(Underpinning Contract)에 더 가깝습니다.",
+    tip:"★ SLA=고객과의 합의 / OLA=내부 팀 간 합의"},
+
+  {id:78,cat:'practice',q:"SLA metrics show green (targets met) but customers are still dissatisfied. Which concept does this illustrate?",
+    o:["SLA compliance failure","The 'watermelon effect' — green outside, red inside","Poor incident management","Insufficient IT capacity"],a:1,
+    en:"The 'watermelon effect' — SLA metrics are green (technically meeting targets) but customer experience is red (unhappy). This happens when SLAs measure wrong things.",
+    ko:"'수박 효과' — SLA 지표는 녹색이지만 실제 고객 경험은 빨간색인 상황입니다.",
+    why:"B가 정답인 이유: 기술적 지표는 충족(Green)하지만 고객은 불만(Red)인 상황을 수박에 비유합니다. 측정하는 것이 실제 고객 경험을 반영하지 못할 때 발생합니다.",
+    tip:"★ Watermelon Effect = SLA 녹색(기술OK) + 고객 빨간색(불만) — 시험 빈출!"},
+
+  {id:79,cat:'practice',q:"What is the difference between an OLA and an SLA?",
+    o:["OLA is with external suppliers; SLA is with internal teams","SLA is with customers; OLA is an internal agreement between teams within the same organization","OLA replaces SLA for cloud services","There is no difference"],a:1,
+    en:"SLA = agreement between provider and customer. OLA = internal agreement between teams within the same organization that supports SLA delivery.",
+    ko:"SLA=제공자와 고객 간 합의. OLA=같은 조직 내 팀 간 내부 합의(SLA 이행 지원).",
+    why:"B가 정답인 이유: SLA는 외부(고객), OLA는 내부(같은 조직 내 팀 간)라는 구분이 핵심입니다. A는 반대로 설명하고 있어 함정입니다.",
+    tip:"★ SLA=고객과의 합의(외부) / OLA=내부 팀 간 합의(SLA 지원)"},
+
+  {id:80,cat:'practice',q:"What is the purpose of the 'Service Request Management' practice?",
+    o:["To restore service after an unplanned interruption","To support the agreed quality of a service by handling all predefined, user-initiated service requests in an effective and user-friendly manner","To identify root causes of recurring incidents","To manage all changes to IT services"],a:1,
+    en:"Service Request Management handles predefined, user-initiated requests effectively and user-friendly. Service requests are NOT incidents — they are part of normal service delivery.",
+    ko:"서비스 요청 관리는 사전 정의된 사용자 요청을 효과적이고 사용자 친화적으로 처리합니다.",
+    why:"B가 정답인 이유: 핵심 키워드: 'Predefined(사전 정의)' + 'User-initiated(사용자 시작)' + 'User-friendly(사용자 친화적)'. A는 인시던트 관리 목적입니다.",
+    tip:"★ 서비스 요청 관리 = 사전 정의된 요청의 효율적·사용자 친화적 처리"},
+
+  {id:81,cat:'practice',q:"Which is an example of a service request?",
+    o:["A critical application crashes and becomes unavailable","A user reports that their email is not working","A user requests a new software license for their laptop","A network outage affects multiple offices"],a:2,
+    en:"Requesting a new software license is a service request — it's a predefined request as part of normal service. The other options are incidents (unplanned interruptions).",
+    ko:"새 소프트웨어 라이선스 요청이 서비스 요청입니다. 나머지는 인시던트입니다.",
+    why:"C가 정답인 이유: 소프트웨어 라이선스 요청은 계획된 정상 서비스입니다. A(앱 크래시), B(이메일 작동 불가), D(네트워크 중단)는 모두 계획되지 않은 서비스 중단 = 인시던트입니다.",
+    tip:"★ 서비스 요청=계획된 정상 서비스 / 인시던트=계획되지 않은 중단"},
+
+  {id:82,cat:'practice',q:"Service requests should ideally be handled in which way?",
+    o:["Through complex approval processes for security","Via standardized, automated workflows wherever possible","Only by senior technical staff for quality","Through manual processes for human oversight"],a:1,
+    en:"Service requests should use standardized, automated workflows wherever possible. Since they're predefined and low risk, automation improves efficiency.",
+    ko:"서비스 요청은 가능한 표준화되고 자동화된 워크플로우를 통해 처리되어야 합니다.",
+    why:"B가 정답인 이유: 서비스 요청은 사전 정의되고 저위험이므로 자동화가 효율성과 사용자 경험을 개선합니다. 예: 비밀번호 재설정 자동화.",
+    tip:"★ 서비스 요청 = 표준화 + 자동화 권장 (사전 정의 + 저위험)"},
+
+  {id:83,cat:'practice',q:"What is MOST important to include in service request management policies?",
+    o:["Personal details of all users who may submit requests","Procedures for handling requests that fall outside the agreed service scope","Technical specifications for all IT components","A list of all incidents from the past year"],a:1,
+    en:"Clear procedures for handling out-of-scope requests are essential to prevent inconsistency and manage user expectations.",
+    ko:"합의된 서비스 범위를 벗어난 요청 처리를 위한 명확한 절차가 중요합니다.",
+    why:"B가 정답인 이유: 범위 외 요청(Outside agreed scope)은 불가피하게 발생하며, 이를 처리하는 명확한 절차가 없으면 일관성이 깨지고 사용자 혼란이 발생합니다.",
+    tip:"★ 범위 외 요청 처리 절차 = 서비스 요청 관리의 중요 정책"},
+
+  {id:84,cat:'practice',q:"What is the purpose of the 'IT Asset Management' practice?",
+    o:["To manage incidents related to IT equipment","To plan and manage the full lifecycle of all IT assets to maximize value, control costs, manage risks, and make informed decisions","To provide users with access to IT equipment on request","To automate the provisioning of IT infrastructure"],a:1,
+    en:"IT Asset Management (ITAM) plans and manages the full lifecycle of all IT assets. Goals: maximize value, control costs, manage risks, support informed decisions.",
+    ko:"ITAM은 모든 IT 자산의 전체 생명주기를 계획하고 관리합니다.",
+    why:"B가 정답인 이유: ITAM의 4가지 목표: ①가치 극대화, ②비용 통제, ③위험 관리, ④정보 기반 의사결정. 'Full lifecycle(전체 생명주기)'가 핵심 키워드입니다.",
+    tip:"★ ITAM = IT 자산 전체 생명주기 관리 (가치+비용+위험+의사결정)"},
+
+  {id:85,cat:'practice',q:"Which is an example of an IT asset?",
+    o:["A business process for handling customer complaints","A service level agreement","A software license","An incident report"],a:2,
+    en:"An IT asset is any financially valuable component that can contribute to IT service delivery. Software licenses are IT assets.",
+    ko:"IT 자산은 IT 서비스 제공에 기여할 수 있는 재정적 가치가 있는 구성요소입니다.",
+    why:"C가 정답인 이유: 소프트웨어 라이선스는 재정적 가치가 있고 생명주기 관리가 필요한 IT 자산입니다. A(비즈니스 프로세스), B(SLA 문서), D(인시던트 보고서)는 IT 자산이 아닙니다.",
+    tip:"★ IT 자산 = 재정적 가치 있는 IT 구성요소 (라이선스, 하드웨어, 클라우드 등)"},
+
+  {id:86,cat:'practice',q:"An organization is unsure whether its software licenses are compliant with vendor agreements. Which practice BEST addresses this?",
+    o:["Incident Management","Service Level Management","IT Asset Management","Problem Management"],a:2,
+    en:"Managing software license compliance is a core responsibility of IT Asset Management.",
+    ko:"소프트웨어 라이선스 컴플라이언스 관리는 IT 자산 관리의 핵심 책임입니다.",
+    why:"C가 정답인 이유: 라이선스 컴플라이언스(Compliance)는 ITAM의 핵심 영역입니다. 올바른 수의 라이선스 보유, 적절한 할당, 벤더 조건 준수를 관리합니다.",
+    tip:"★ 소프트웨어 라이선스 컴플라이언스 → IT Asset Management"},
+
+  {id:87,cat:'practice',q:"What is the purpose of the 'Release Management' practice?",
+    o:["To assess and authorize changes before implementation","To make new and changed services and features available for use","To manage the full lifecycle of all IT assets","To ensure services are designed to meet business requirements"],a:1,
+    en:"Release Management makes new and changed services and features available for use. It covers planning, scheduling, and controlling releases.",
+    ko:"릴리스 관리는 새롭고 변경된 서비스와 기능을 사용 가능하게 만듭니다.",
+    why:"B가 정답인 이유: Release Management의 핵심은 'Available for use(사용 가능하게 만듦)'입니다. A(변경 승인)는 Change Enablement입니다.",
+    tip:"★ 릴리스 관리 = 새 기능/서비스를 사용 가능하게 만들기"},
+
+  {id:88,cat:'practice',q:"How does Release Management differ from Deployment Management?",
+    o:["They are identical practices with different names","Release Management makes services available for use; Deployment Management moves components to live environments","Deployment Management is only for cloud services","Release Management is only for software"],a:1,
+    en:"Release Management = makes services available (business activity). Deployment Management = moves components to live environments (technical activity).",
+    ko:"릴리스 관리=기능 가용화(비즈니스). 배포 관리=컴포넌트 이동(기술).",
+    why:"B가 정답인 이유: Release(비즈니스적 가용화)와 Deployment(기술적 이동)의 차이를 정확히 설명합니다. A(동일)는 틀리고, 둘은 별개의 프랙티스입니다.",
+    tip:"★ 릴리스=기능 가용화(비즈니스) / 배포=컴포넌트 이동(기술)"},
+
+  {id:89,cat:'practice',q:"An organization deploys software updates in small, frequent batches rather than large, infrequent releases. Which approach is this?",
+    o:["Waterfall release management","Continuous delivery and deployment","Emergency change management","Standard change processing"],a:1,
+    en:"Small, frequent deployments = continuous delivery and deployment, aligned with DevOps and Agile practices.",
+    ko:"소규모 빈번한 배포는 DevOps/Agile과 연계된 지속적 제공·배포 접근법입니다.",
+    why:"B가 정답인 이유: 'Small, frequent batches(소규모 빈번한 배치)'는 Continuous Delivery의 핵심 특징입니다. A(Waterfall)는 반대로 크고 드문 릴리스입니다.",
+    tip:"★ 소규모 빈번한 배포 = Continuous Delivery/Deployment (DevOps/Agile)"},
+
+  {id:90,cat:'practice',q:"What is the purpose of the 'Monitoring and Event Management' practice?",
+    o:["To restore service after incidents occur","To systematically observe services and service components, and record and report changes of state identified as events","To manage all changes to IT infrastructure","To track SLA performance"],a:1,
+    en:"Monitoring and Event Management systematically observes services, records changes of state (events), and determines appropriate action.",
+    ko:"모니터링 및 이벤트 관리는 서비스를 체계적으로 관찰하고 상태 변화(이벤트)를 기록합니다.",
+    why:"B가 정답인 이유: 핵심 키워드: 'Systematically observe(체계적 관찰)' + 'Record and report(기록 및 보고)' + 'Changes of state(상태 변화)'. 사전적으로 문제를 식별하는 프랙티스입니다.",
+    tip:"★ 모니터링 & 이벤트 관리 = 체계적 관찰 + 상태 변화 기록 + 사전적 문제 식별"},
+
+  {id:91,cat:'practice',q:"In Monitoring and Event Management, what is an 'event'?",
+    o:["An unplanned interruption to a service","Any change of state that has significance for the management of a service or other CI","A formal request from a user for a new service","A scheduled maintenance window"],a:1,
+    en:"An event is any change of state significant for service management. Three types: informational, warning, and exception.",
+    ko:"이벤트는 서비스 관리에 중요성이 있는 모든 상태 변화입니다. 3유형: 정보성/경고/예외.",
+    why:"B가 정답인 이유: Event의 공식 정의입니다. A(계획되지 않은 중단)는 Incident의 정의이지 Event가 아닙니다. 모든 인시던트는 이벤트이지만, 모든 이벤트가 인시던트는 아닙니다.",
+    tip:"★ 이벤트 3가지: 정보성(Informational)/경고(Warning)/예외(Exception)"},
+
+  {id:92,cat:'practice',q:"What is the purpose of the 'Continual Improvement' practice?",
+    o:["To manage all changes to IT services","To align the organization's practices and services with changing business needs through ongoing improvement","To monitor IT infrastructure performance","To manage relationships with external suppliers"],a:1,
+    en:"Continual Improvement aligns practices and services with changing business needs. It applies to everything — services, practices, governance, and the SVS itself.",
+    ko:"지속적 개선은 변화하는 비즈니스 니즈에 맞게 프랙티스와 서비스를 조정합니다.",
+    why:"B가 정답인 이유: 핵심 키워드: 'Align(조정)' + 'Changing business needs(변화하는 비즈니스 니즈)' + 'Ongoing improvement(지속적 개선)'. 일회성이 아닌 지속적인 활동입니다.",
+    tip:"★ 지속적 개선 = SVS의 모든 구성요소에 적용, 개선 문화 내재화"},
+
+  {id:93,cat:'practice',q:"The ITIL Continual Improvement Model starts with which step?",
+    o:["Where are we now?","How do we get there?","What is the vision?","Take action"],a:2,
+    en:"The model starts with 'What is the vision?' — understanding the organizational direction. Full 7 steps: Vision → Where now → Where want to be → How → Action → Did we get there → Keep momentum.",
+    ko:"지속적 개선 모델의 첫 단계는 '비전은 무엇인가?'입니다.",
+    why:"C가 정답인 이유: 많은 사람이 A(Where are we now?)를 첫 단계로 착각하지만, 실제로는 C(What is the Vision?)가 첫 단계입니다. 비전을 먼저 이해해야 현재 위치를 평가할 기준이 생깁니다.",
+    tip:"★ 지속적 개선 모델 1단계 = What is the Vision? (비전 먼저!)"},
+
+  {id:94,cat:'practice',q:"What is the purpose of the 'Service Configuration Management' practice?",
+    o:["To manage service performance against agreed targets","To ensure accurate and reliable information about CIs is available when and where needed","To track and manage software licenses","To handle all user requests for IT equipment"],a:1,
+    en:"Service Configuration Management ensures accurate, reliable information about Configuration Items (CIs) is available when and where needed, stored in the CMDB.",
+    ko:"서비스 구성 관리는 CI에 대한 정확하고 신뢰할 수 있는 정보가 필요할 때 사용 가능하도록 합니다.",
+    why:"B가 정답인 이유: 'Accurate and reliable information(정확하고 신뢰할 수 있는 정보)' + 'When and where needed(필요할 때와 장소에서)'가 핵심입니다. C(라이선스 관리)는 ITAM의 영역입니다.",
+    tip:"★ 구성 관리 = 정확하고 신뢰할 수 있는 CI 정보 → CMDB에 저장"},
+
+  {id:95,cat:'practice',q:"What is a 'Configuration Item (CI)' in ITIL 4?",
+    o:["Any component that needs to be managed in order to deliver an IT service","Any IT asset owned by the organization","A formal document describing a service","A user request for IT support"],a:0,
+    en:"A CI is any component that needs to be managed to deliver an IT service. CIs include hardware, software, networks, documentation, and even people.",
+    ko:"CI는 IT 서비스 제공을 위해 관리되어야 하는 모든 구성요소입니다.",
+    why:"A가 정답인 이유: CI의 정의 핵심은 '관리 필요(Needs to be managed)' + 'IT 서비스 제공을 위해'입니다. B(모든 IT 자산)와 다릅니다 — 모든 CI가 자산이지만, 모든 자산이 CI는 아닙니다.",
+    tip:"★ CI = IT 서비스 제공에 필요한 관리 대상 구성요소 → CMDB에 기록"},
+
+  {id:96,cat:'practice',q:"What is the purpose of the 'Knowledge Management' practice?",
+    o:["To manage incidents by providing known solutions","To maintain and improve the effective, efficient, and convenient use of information and knowledge across the organization","To document SLAs and operational procedures","To provide a repository of all IT assets"],a:1,
+    en:"Knowledge Management maintains and improves the effective, efficient, and convenient use of information and knowledge across the organization.",
+    ko:"지식 관리는 조직 전반에 걸쳐 정보와 지식의 효과적·효율적·편리한 사용을 유지·개선합니다.",
+    why:"B가 정답인 이유: 핵심 3가지: 'Effective(효과적)' + 'Efficient(효율적)' + 'Convenient(편리한)'. 올바른 정보를 올바른 사람에게 올바른 시간에 제공하는 것이 목적입니다.",
+    tip:"★ 지식 관리 = 올바른 정보를 올바른 사람에게 올바른 시간에"},
+
+  {id:97,cat:'practice',q:"The DIKW model is associated with which ITIL 4 practice?",
+    o:["Service Level Management","Incident Management","Knowledge Management","Service Configuration Management"],a:2,
+    en:"The DIKW model (Data → Information → Knowledge → Wisdom) is associated with Knowledge Management. It shows how raw data transforms into wisdom.",
+    ko:"DIKW 모델(데이터→정보→지식→지혜)은 지식 관리와 관련됩니다.",
+    why:"C가 정답인 이유: DIKW는 Knowledge Management의 핵심 모델입니다. 데이터가 어떻게 정보, 지식, 최종적으로 지혜(건전한 판단 능력)로 변환되는지를 설명합니다.",
+    tip:"★ DIKW = Data→Information→Knowledge→Wisdom → Knowledge Management"},
+
+  {id:98,cat:'practice',q:"What is the purpose of the 'Deployment Management' practice?",
+    o:["To make new services available for user consumption","To move new or changed hardware, software, or other components to live environments","To manage the lifecycle of all IT infrastructure","To assess and authorize all changes before implementation"],a:1,
+    en:"Deployment Management moves components to live environments — the technical act of moving things. Separate from Release Management (making services available for use).",
+    ko:"배포 관리는 구성요소를 라이브 환경으로 이동하는 기술적 행위입니다.",
+    why:"B가 정답인 이유: Deployment의 핵심은 'Move to live environments(라이브 환경으로 이동)'입니다. A(사용 가능하게 만듦)는 Release Management의 목적입니다.",
+    tip:"★ 배포 관리 = 컴포넌트를 라이브 환경으로 이동 (기술적 행위)"},
+
+  {id:99,cat:'practice',q:"What is the purpose of the 'Relationship Management' practice?",
+    o:["To manage technical integration between systems","To establish and nurture links between the organization and its stakeholders at strategic and tactical levels","To manage contractual agreements with external suppliers","To handle all complaints and escalations from customers"],a:1,
+    en:"Relationship Management establishes and nurtures links between the organization and its stakeholders at strategic and tactical levels.",
+    ko:"관계 관리는 조직과 이해관계자 간의 전략적·전술적 수준의 연결을 구축하고 육성합니다.",
+    why:"B가 정답인 이유: 핵심 키워드: 'Establish and nurture(구축하고 육성)' + 'Strategic and tactical levels(전략적·전술적 수준)'. C(계약 관리)는 Supplier Management에 더 가깝습니다.",
+    tip:"★ 관계 관리 = 조직-이해관계자 간 전략적·전술적 연결 구축·육성"},
+
+  {id:100,cat:'practice',q:"ITIL 4 categorizes its 34 practices into three groups. Which CORRECTLY identifies them?",
+    o:["Strategic, Tactical, and Operational practices","General Management practices, Service Management practices, and Technical Management practices","Core, Supporting, and Advanced practices","Foundation, Intermediate, and Expert practices"],a:1,
+    en:"34 practices in three groups: General Management (14), Service Management (17), Technical Management (3).",
+    ko:"34개 프랙티스 = 일반 관리(14) + 서비스 관리(17) + 기술 관리(3).",
+    why:"B가 정답인 이유: ITIL v4의 공식 분류입니다. General Management(비즈니스에서 차용, 14개), Service Management(서비스 관리 특화, 17개), Technical Management(기술에서 차용, 3개).",
+    tip:"★ 34개 프랙티스 = 일반관리(14) + 서비스관리(17) + 기술관리(3)"}
+];
+
+// ── STATE ──
+let mode='quiz', cf='all', ans={};
+
+// ── RENDER ──
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.mode-btn').forEach((b,i)=>b.classList.toggle('on',i===(m==='quiz'?0:1)));
+  document.getElementById('quizV').classList.toggle('hidden',m!=='quiz');
+  document.getElementById('studyV').classList.toggle('hidden',m!=='study');
+  render();
+}
+function filt(c,el){cf=c;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
+function getF(){return cf==='all'?Q:Q.filter(q=>q.cat===cf);}
+function render(){mode==='quiz'?renderQuiz():renderStudy();}
+
+const tagMap={concept:'Key Concept',dimension:'4 Dimensions',principle:'Guiding Principle',svs:'SVS',svc:'Value Chain',practice:'Practice'};
+
+function renderQuiz(){
+  const qs=getF();
+  document.getElementById('quizV').innerHTML=qs.map(q=>{
+    const s=ans[q.id];
+    let cc='qc';if(s)cc+=s.c?' ok':' no';
+    let st='';if(s)st=s.c?'✓':'✗';
+    return `<div class="${cc}" id="c${q.id}">
+      <div class="qh" onclick="tog(${q.id})">
+        <span class="qn">Q${q.id}</span>
+        <span class="tag tag-${q.cat}">${tagMap[q.cat]}</span>
+        <span class="qt">${hl(q.q)}</span>
+        <span class="qs">${st}</span>
+      </div>
+      <div class="qb" id="b${q.id}">
+        <div class="opts">${q.o.map((o,i)=>{
+          let oc='op';
+          if(s){if(i===q.a)oc+=' rev';else if(i===s.ch&&!s.c)oc+=' wrn';else oc+=' dis';}
+          return `<div class="${oc}" onclick="pick(${q.id},${i})" id="o${q.id}-${i}"><span class="opk">${'ABCD'[i]}</span><span>${hl(o)}</span></div>`;
+        }).join('')}</div>
+        ${s?expHTML(q,s):''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function expHTML(q,s){
+  const ok=s.c;
+  return `<div class="exp show ${ok?'cexp':'wexp'}">
+    <div class="exp-r ${ok?'c':'w'}">${ok?'✓ Correct!':'✗ Incorrect — Answer: '+('ABCD'[q.a])}</div>
+    <div class="exp-lbl">Explanation (EN)</div>
+    <div class="exp-en">${q.en}</div>
+    <div class="exp-ko">🇰🇷 ${q.ko}</div>
+    <div class="exp-why"><div class="why-title">왜 이 답인가?</div><div class="why-body">${q.why}</div></div>
+    ${q.tip?`<div class="exp-tip">${q.tip}</div>`:''}
+  </div>`;
+}
+
+function tog(id){const b=document.getElementById('b'+id);b.classList.toggle('open');}
+
+function pick(qid,ch){
+  if(ans[qid])return;
+  const q=Q.find(x=>x.id===qid);
+  const ok=ch===q.a;
+  ans[qid]={ch,c:ok};
+  q.o.forEach((_,i)=>{
+    const el=document.getElementById('o'+qid+'-'+i);
+    el.onclick=null;
+    if(i===q.a)el.className='op rev';
+    else if(i===ch&&!ok)el.className='op wrn';
+    else el.className='op dis';
+  });
+  const b=document.getElementById('b'+qid);
+  b.insertAdjacentHTML('beforeend',expHTML(q,ans[qid]));
+  const card=document.getElementById('c'+qid);
+  card.className='qc '+(ok?'ok':'no');
+  card.querySelector('.qs').textContent=ok?'✓':'✗';
+  updSt();
+}
+
+function renderStudy(){
+  const qs=getF();
+  document.getElementById('studyV').innerHTML=qs.map(q=>`<div class="sc">
+    <div class="s-head">
+      <span class="qn">Q${q.id}</span>
+      <span class="tag tag-${q.cat}">${tagMap[q.cat]}</span>
+      <span class="qt">${hl(q.q)}</span>
+    </div>
+    <div class="s-body">
+      <div class="s-opts">${q.o.map((o,i)=>`<div class="s-op${i===q.a?' ans':''}"><span class="opk">${'ABCD'[i]}</span><span>${hl(o)}${i===q.a?' ✓':''}</span></div>`).join('')}</div>
+      <div class="s-exp">
+        <div class="exp-lbl">Explanation (EN)</div>
+        <div class="exp-en">${q.en}</div>
+        <div class="exp-ko">🇰🇷 ${q.ko}</div>
+        <div class="exp-why"><div class="why-title">왜 이 답인가?</div><div class="why-body">${q.why}</div></div>
+        ${q.tip?`<div class="exp-tip">${q.tip}</div>`:''}
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+function updSt(){
+  const t=Q.length,a=Object.keys(ans).length,c=Object.values(ans).filter(x=>x.c).length,w=a-c;
+  document.getElementById('sT').textContent=t;
+  document.getElementById('sA').textContent=a;
+  document.getElementById('sC').textContent=c;
+  document.getElementById('sW').textContent=w;
+  const p=Math.round(a/t*100);
+  document.getElementById('pB').style.width=p+'%';
+  document.getElementById('pP').textContent=p+'%';
+}
+
+function resetAll(){if(!confirm('Reset all progress?'))return;ans={};updSt();render();}
+
+renderQuiz();updSt();
+</script>
+</body>
+</html>
